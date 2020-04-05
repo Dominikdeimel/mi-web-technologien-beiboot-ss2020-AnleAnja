@@ -2,12 +2,14 @@
   <div id="mainPage">
     <Upload />
     <ImageList v-on:open-image="$emit('open-image', $event)" />
+    <DeleteAll />
   </div>
 </template>
 
 <script>
 import Upload from './Upload.vue';
 import ImageList from './ImageList.vue';
+import DeleteAll from './DeleteAll';
 
 export default {
   data: () => ({
@@ -16,7 +18,8 @@ export default {
   name: 'App',
   components: {
     Upload,
-    ImageList
+    ImageList,
+    DeleteAll
   },
   methods: {
   }

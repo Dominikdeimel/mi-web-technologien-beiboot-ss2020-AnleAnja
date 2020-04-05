@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var fs = require('fs');
+var fsextra = require('fs-extra');
 var shortid = require('shortid');
 var jimp = require('jimp');
 
@@ -26,8 +27,7 @@ app.post('/', function (req, res, next) {
 
 app.get('/imagelist', function (req, res, next) {
 
-    let imgs;
-    imgs = fs.readdirSync('data');
+    let imgs = fs.readdirSync('data');
     res.send(imgs);
 
 })
@@ -49,6 +49,20 @@ app.get('/image/:img/:size', function (req, res, next) {
         .catch(err => {
             console.error(err);
         });
+})
+
+app.delete('/imageList', function(req, res, next) {
+    let ids = fs.readdirSync('data');
+    for(id of ids){
+        fsextra.removeSync('data/' + id)        
+    }
+    res.send('Alle Bilder wurden gelöscht.')
+})
+
+app.delete('/imageList/:img', function(req, res, next) {
+    let imgParam = req.params.img;
+    fsextra.removeSync('data/' + imgParam)
+    res.send('Bild wurde gelöscht.')
 })
 
 app.listen(3000, function () {
