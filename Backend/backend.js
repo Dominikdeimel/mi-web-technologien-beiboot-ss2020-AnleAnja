@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var fs = require('fs');
 var shortid = require('shortid');
+var jimp = require('jimp');
 
 var app = express();
 var names = [];
@@ -15,11 +16,12 @@ app.use(express.raw({
 
 app.post('/', function (req, res, next) {
 
-    let id = shortid.generate() + '.jpg';
+    let id = shortid.generate();
     names.push(id)
-    fs.writeFileSync('data/' + id, req.body);
+    fs.mkdirSync('data/' + id);
+    fs.writeFileSync('data/' + id + '/' + "original", req.body);
     res.end();
-    
+
 })
 
 app.get('/imagelist', function (req, res, next) {
@@ -30,10 +32,23 @@ app.get('/imagelist', function (req, res, next) {
 
 })
 
-app.get('/image/:img', function(req, res, next){
-    let img;
-    img = fs.readFileSync('data/' + req.params.img);
-    res.send(img);
+app.get('/image/:img/:size', function (req, res, next) {
+    let imgParam = req.params.img;
+    let sizeParam = parseInt(req.params.size);
+    let img = fs.readFileSync('data/' + imgParam + '/' + 'original');
+    jimp.read(img)
+        .then(img => {
+            return img
+                .resize(sizeParam, jimp.AUTO)
+                .getBufferAsync(jimp.MIME_JPEG);
+        })
+        .then(buffer => {
+            fs.writeFileSync('data/' + imgParam + '/' + sizeParam, buffer);
+            res.send(buffer);
+        })
+        .catch(err => {
+            console.error(err);
+        });
 })
 
 app.listen(3000, function () {

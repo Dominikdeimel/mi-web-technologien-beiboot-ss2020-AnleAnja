@@ -2,9 +2,6 @@
   <div class="hello">
     <input name="datei" type="file" size="5000" accept="image/*" ref="imgInput" />
     <button v-on:click="send">Senden</button>
-    <img v-for="img in imgs" v-bind:src="'http://localhost:3000/image/' + img + '/' + size" :key="img" ref="image">
-    <input name="newWidth" type="text" ref="widthInput" />
-    <button v-on:click="resize">Skalieren</button>
   </div>
 </template>
 
@@ -17,8 +14,6 @@ export default {
     size: null
   }),
   created() {
-
-    this.allImgs();
     
   },
   methods: {
@@ -31,17 +26,6 @@ export default {
       .catch(function(error) {
         console.log(error);
       });
-    },
-    allImgs: function() {
-      let _this = this;
-      axios
-      .get("http://localhost:3000/imagelist")
-      .then(function(response){
-        _this.imgs = response.data;
-      })
-    },
-    resize: function() {
-      this.size = this.$refs.widthInput.value;
     }
   }
 };

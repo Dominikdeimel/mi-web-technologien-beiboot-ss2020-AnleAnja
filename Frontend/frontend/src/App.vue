@@ -1,19 +1,29 @@
 <template>
   <div id="app">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <MainPage v-if="click===null" v-on:open-image="onImageClicked" />
+    <ManipulationPage v-if="click" v-on:close-image="click = null" v-bind:img="click"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MainPage from './components/MainPage.vue';
+import ManipulationPage from './components/ManipulationPage';
 
 export default {
+  data: () => ({
+    click: null
+  }),
   name: 'App',
   components: {
-    HelloWorld
+    MainPage,
+    ManipulationPage
+  },
+  methods: {
+    onImageClicked: function(img){
+      this.click = img
+    }
   }
 }
-
 </script>
 
 <style>
