@@ -8,20 +8,20 @@
 import axios from "axios";
 
 export default {
-  data: () => ({
-  }),
-  created() {
-  },
+  data: () => ({}),
+  created() {},
   methods: {
     deleteAll: function() {
+      const $emit = this.$emit.bind(this);
       axios
-      .delete("http://localhost:3000/imageList")
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+        .delete("http://localhost:3000/imageList")
+        .then(function(response) {
+          $emit("deleteImgs");
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   }
 };
@@ -29,7 +29,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-img { max-width: 250px; }
+img {
+  max-width: 250px;
+}
 
 h3 {
   margin: 40px 0 0;

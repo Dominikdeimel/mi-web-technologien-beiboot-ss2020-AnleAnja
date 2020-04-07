@@ -1,8 +1,8 @@
 <template>
   <div id="mainPage">
-    <Upload />
-    <ImageList v-on:open-image="$emit('open-image', $event)" />
-    <DeleteAll />
+    <Upload v-on:upload="loadImageNames()" />
+    <ImageList v-bind:imageNames="imageNames" v-on:open-image="$emit('open-image', $event)" />
+    <DeleteAll v-on:deleteImgs="loadImageNames()"/>
   </div>
 </template>
 
@@ -10,11 +10,15 @@
 import Upload from './Upload.vue';
 import ImageList from './ImageList.vue';
 import DeleteAll from './DeleteAll';
+import axios from "axios";
 
 export default {
   data: () => ({
-    img: null
+    imageNames: null
   }),
+  created: function(){
+    this.loadImageNames();
+  },
   name: 'App',
   components: {
     Upload,
@@ -22,6 +26,11 @@ export default {
     DeleteAll
   },
   methods: {
+    loadImageNames: function() {
+      axios
+        .get("http://localhost:3000/imageList")
+        .then((res) => this.imageNames = res.data)
+    }
   }
 }
 

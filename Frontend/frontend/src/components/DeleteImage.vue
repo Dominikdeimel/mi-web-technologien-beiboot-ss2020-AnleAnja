@@ -14,9 +14,8 @@ export default {
   }),
   methods: {
     deleteImage: function() {
-        let img;
       axios
-      .delete("http://localhost:3000/imageList/" + img)
+      .delete("http://localhost:3000/imageList/" + this.img)
       .then(function(response) {
         console.log(response);
       })

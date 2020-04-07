@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <ImageComponent v-bind:img="img" v-bind:size="size"></ImageComponent>
-    <Resize v-on:resize-image="onResizeButtonClicked" v-on:crop-image="onCropButtonClicked"/>
+    <ImageComponent v-bind:img="img" v-bind:size="size" v-bind:square="square"></ImageComponent>
+    <Resize v-on:resize-image="onResizeButtonClicked" v-on:crop-image="onCropClicked"/>
     <button v-on:click="$emit('close-image')">Zurück</button>
     <DeleteImage v-bind:img="img"/>
   </div>
@@ -15,7 +15,8 @@ import DeleteImage from './DeleteImage.vue';
 export default {
   props: ["img"],
   data: () => ({
-    size: 800
+    size: 800,
+    square: false
   }),
   name: 'App',
   components: {
@@ -27,8 +28,8 @@ export default {
     onResizeButtonClicked: function(size){
       this.size = size;
     },
-    onCropButtonClicked: function(size){
-      this.size = size;
+    onCropClicked: function(){
+      this.square = !this.square;
     }
   }
 }

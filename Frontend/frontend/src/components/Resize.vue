@@ -5,7 +5,7 @@
     <button v-on:click="$emit('resize-image', sizeSmartphone)">Smartphone</button>
     <button v-on:click="$emit('resize-image', sizeTablet)">Tablet</button>
     <button v-on:click="$emit('resize-image', sizeDesktop)">Desktop</button>
-    <button v-on:click="$emit('crop-image', sizeDesktop)">Quadratisches Derivat</button>
+    <button v-on:click="$emit('crop-image')">Quadratisches Derivat</button>
   </div>
 </template>
 

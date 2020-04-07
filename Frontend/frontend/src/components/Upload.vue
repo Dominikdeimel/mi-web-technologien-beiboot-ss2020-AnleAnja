@@ -18,9 +18,12 @@ export default {
   },
   methods: {
     send: function() {
+      const $emit = this.$emit.bind(this);
+
       axios
       .post("http://localhost:3000/", this.$refs.imgInput.files[0])
       .then(function(response) {
+        $emit("upload");
         console.log(response);
       })
       .catch(function(error) {

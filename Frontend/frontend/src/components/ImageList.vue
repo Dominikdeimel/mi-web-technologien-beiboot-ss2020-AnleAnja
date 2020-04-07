@@ -1,7 +1,7 @@
 <template>
   <div class="image-list">
     <ImageComponent
-      v-for="img in imgs"
+      v-for="img in imageNames"
       v-bind:key="img"
       size="300"
       v-bind:img="img"
@@ -11,23 +11,13 @@
 </template>
 
 <script>
-import axios from "axios";
 import Image from "./Image.vue";
 
 export default {
+  props: ['imageNames'],
   data: () => ({
-    imgs: null
   }),
-  created() {
-    this.allImgs();
-  },
   methods: {
-    allImgs: function() {
-      let _this = this;
-      axios.get("http://localhost:3000/imagelist").then(function(response) {
-        _this.imgs = response.data;
-      });
-    }
   },
   components: {
     ImageComponent: Image
