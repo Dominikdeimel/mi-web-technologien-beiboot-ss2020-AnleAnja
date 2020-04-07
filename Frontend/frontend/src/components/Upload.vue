@@ -1,55 +1,48 @@
 <template>
-  <div class="hello">
-    <input name="datei" type="file" size="5000" accept="image/*" ref="imgInput" />
-    <button v-on:click="send">Senden</button>
+  <div>
+    <label for="fileUpload">
+      <v-icon>{{ mdiUpload }}</v-icon>
+    </label>
+    <input id="fileUpload" name="datei" type="file" size="5000" accept="image/*" ref="imgInput" />
+    <v-btn text v-on:click="send">
+      <span class="mr-2">OK</span>
+    </v-btn>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import { mdiUpload } from "@mdi/js";
 
 export default {
   data: () => ({
     imgs: null,
-    size: null
+    size: null,
+    mdiUpload: mdiUpload
   }),
-  created() {
-    
-  },
+  created() {},
   methods: {
     send: function() {
       const $emit = this.$emit.bind(this);
 
       axios
-      .post("http://localhost:3000/", this.$refs.imgInput.files[0])
-      .then(function(response) {
-        $emit("upload");
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+        .post("http://localhost:3000/", this.$refs.imgInput.files[0])
+        .then(function(response) {
+          $emit("upload");
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-img { max-width: 250px; }
 
-h3 {
-  margin: 40px 0 0;
+input[type=file]{
+  display:none;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>

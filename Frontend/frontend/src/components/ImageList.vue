@@ -1,48 +1,39 @@
 <template>
-  <div class="image-list">
-    <ImageComponent
-      v-for="img in imageNames"
-      v-bind:key="img"
-      size="300"
-      v-bind:img="img"
-      v-on:open-image="$emit('open-image', img)"
-    ></ImageComponent>
-  </div>
+    <v-container>
+      <v-card>
+      <v-row no-gutters>
+        <template v-for="img in imageNames">
+          <v-col :key="img">
+            <ImageComponent
+              v-for="img in imageNames"
+              v-bind:key="img"
+              size="540"
+              v-bind:img="img"
+              v-on:open-image="$emit('open-image', img)"
+            ></ImageComponent>
+          </v-col>
+        </template>
+      </v-row>
+      </v-card>
+    </v-container>
 </template>
 
 <script>
 import Image from "./Image.vue";
 
 export default {
-  props: ['imageNames'],
-  data: () => ({
-  }),
-  methods: {
-  },
+  props: ["imageNames"],
+  data: () => ({}),
+  methods: {},
   components: {
     ImageComponent: Image
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-img {
-  max-width: 250px;
-}
-
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+card {
+  padding-top: 50px;
+  padding-bottom: 20px;
 }
 </style>
