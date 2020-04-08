@@ -1,12 +1,12 @@
 <template>
-  <div class="hello">
+  <div>
     <v-container style="width:300px">
       <v-row no-gutters>
         <v-col>
-          <v-text-field ref="widthInput" placeholder="Skalieren" style="width:200px" outlined></v-text-field>
+          <v-text-field v-model="widthInput" placeholder="Skalieren" style="width:200px" outlined></v-text-field>
         </v-col>
         <v-col>
-          <v-btn text v-on:click="$emit('resize-image', $refs.widthInput.value)" style="margin-top:10px">
+          <v-btn text v-on:click="scaleArbitrary()" style="margin-top:10px">
             <v-icon>{{ mdiResize }}</v-icon>
           </v-btn>
         </v-col>
@@ -21,9 +21,7 @@
     <v-btn text v-on:click="$emit('resize-image', sizeDesktop)">
       <v-icon>{{ mdiMonitor }}</v-icon>
     </v-btn>
-    <v-btn text v-on:click="$emit('crop-image')">
-      <v-icon>{{ mdiCrop }}</v-icon>
-    </v-btn>
+    <v-switch v-on:change="$emit('crop-image', $event)" :label="'Quadrat'"></v-switch>
   </div>
 </template>
 
@@ -43,10 +41,25 @@ export default {
     mdiCellphone: mdiCellphone,
     mdiTablet: mdiTablet,
     mdiMonitor: mdiMonitor,
-    mdiCrop: mdiCrop
-  })
+    mdiCrop: mdiCrop,
+    widthInput: undefined
+  }),
+  methods: {
+    scaleArbitrary() {
+      let inputText = this.widthInput;
+        let val = parseInt(inputText);
+        if(isNaN(val))
+        {
+          alert("plz only input numbr thx");
+        }
+        else
+        {
+        this.$emit("resize-image", val);
+        }
+      }
+    }
 };
 </script>
 
 <style scoped>
-</style>
+</style>;

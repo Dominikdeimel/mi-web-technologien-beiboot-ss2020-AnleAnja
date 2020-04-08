@@ -39,8 +39,8 @@ export default {
     onResizeButtonClicked: function(size) {
       this.size = size;
     },
-    onCropClicked: function() {
-      this.square = !this.square;
+    onCropClicked: function(state) {
+      this.square = state;
     }
   }
 };
