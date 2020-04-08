@@ -5,7 +5,7 @@
       <v-spacer></v-spacer>
       <DeleteAll v-on:deleteImgs="loadImageNames()"/>
     </v-app-bar>
-    <div align="center">
+    <div align="left">
       <ImageList v-bind:imageNames="imageNames" v-on:open-image="$emit('open-image', $event)" />
     </div>
   </v-container>

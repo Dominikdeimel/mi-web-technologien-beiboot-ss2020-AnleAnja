@@ -15,9 +15,11 @@ export default {
   }),
   methods: {
     deleteImage: function() {
+      const $emit = this.$emit.bind(this);
       axios
         .delete("http://localhost:3000/imageList/" + this.img)
         .then(function(response) {
+          $emit("deleteImg");
           console.log(response);
         })
         .catch(function(error) {

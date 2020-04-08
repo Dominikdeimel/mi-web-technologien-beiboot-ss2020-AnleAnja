@@ -1,21 +1,13 @@
 <template>
-    <v-container>
-      <v-card>
-      <v-row no-gutters>
-        <template v-for="img in imageNames">
-          <v-col :key="img">
-            <ImageComponent
-              v-for="img in imageNames"
-              v-bind:key="img"
-              size="540"
-              v-bind:img="img"
-              v-on:open-image="$emit('open-image', img)"
-            ></ImageComponent>
-          </v-col>
-        </template>
-      </v-row>
-      </v-card>
-    </v-container>
+  <div class="listing-container">
+    <ImageComponent style="padding:10px"
+      v-for="img in imageNames"
+      v-bind:key="img"
+      size="400"
+      v-bind:img="img"
+      v-on:open-image="$emit('open-image', img)"
+    ></ImageComponent>
+  </div>
 </template>
 
 <script>
@@ -32,8 +24,13 @@ export default {
 </script>
 
 <style scoped>
-card {
-  padding-top: 50px;
-  padding-bottom: 20px;
+.listing-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  left: 0;
 }
 </style>

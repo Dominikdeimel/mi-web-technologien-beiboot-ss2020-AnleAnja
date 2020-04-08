@@ -5,7 +5,7 @@
         <v-icon>{{ mdiBack }}</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <DeleteImage v-bind:img="img" />
+      <DeleteImage v-bind:img="img" v-on:deleteImg="$emit('close-image')"/>
     </v-app-bar>
     <div align="center">
       <v-card class="card">
