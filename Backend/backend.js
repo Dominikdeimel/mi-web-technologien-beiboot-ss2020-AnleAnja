@@ -4,6 +4,7 @@ var cors = require('cors');
 var fs = require('fs').promises;
 var shortid = require('shortid');
 var jimp = require('jimp');
+const { getSortedImageList } = require("./async");
 
 var app = express();
 var names = [];
@@ -26,17 +27,36 @@ app.post('/', function (req, res, next) {
 
 app.get('/imagelist', function (req, res, next) {
 
+    getSortedImageList()
+        .then(list => res.send(list));
+
+    /*
     fs.readdir('data/')
         .then(fileList => {
+            let openFiles = [];
             for (let i = 0; i < fileList.length; i++) {
-                return fs.open('data/' + fileList[i], 'r');
+                openFiles.push(
+                    fs.open(`data/${fileList[i]}/original`, 'r')
+                        .then((file) => file.stat()
+                            .then((stat) => {
+                                file.close();
+                                return {
+                                    birthtime: stat.birthtime,
+                                    filename: fileList[i]
+                                }
+                            }))
+                );
             }
+            return Promise.all(openFiles);
         })
-        .then((fileHandle) => fileHandle.stat())
-        .then((stats) => {
-            console.log(stats.birthtime);
-        })
-})
+        .then((data) => {
+            let sortedFiles = data
+                .sort((a, b) => a.birthtime - b.birthtime)
+                .map(v => v.filename);
+            res.send(sortedFiles);
+        });
+        */
+});
 
 app.get('/image/:img/:size', function (req, res, next) {
     let imgParam = req.params.img;

@@ -23,7 +23,7 @@ export default {
     files: null,
     deleteAllImgs: false
   }),
-  created: function() {
+  created() {
     this.loadImageNames();
   },
   name: "App",
@@ -33,10 +33,10 @@ export default {
     DeleteAll
   },
   methods: {
-    loadImageNames: function() {
+    loadImageNames() {
       axios
         .get("http://localhost:3000/imageList")
-        .then(res => (this.imageNames = res.data));
+        .then(res => this.imageNames = res.data);
     }
   }
 };

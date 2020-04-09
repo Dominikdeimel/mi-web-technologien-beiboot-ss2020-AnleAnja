@@ -3,10 +3,7 @@
     <label for="fileUpload">
       <v-icon>{{ mdiUpload }}</v-icon>
     </label>
-    <input id="fileUpload" name="datei" type="file" size="5000" accept="image/*" ref="imgInput" />
-    <v-btn text v-on:click="send">
-      <span class="mr-2">OK</span>
-    </v-btn>
+    <input id="fileUpload" name="datei" type="file" size="5000" accept="image/*" ref="imgInput" v-on:change="send"/>
   </div>
 </template>
 

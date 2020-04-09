@@ -11,17 +11,29 @@
           </v-btn>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <v-btn text v-on:click="$emit('resize-image', sizeSmartphone)">
+            <v-icon>{{ mdiCellphone }}</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col>
+          <v-btn text v-on:click="$emit('resize-image', sizeTablet)">
+            <v-icon>{{ mdiTablet }}</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col>
+          <v-btn text v-on:click="$emit('resize-image', sizeDesktop)">
+            <v-icon>{{ mdiMonitor }}</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-switch v-on:change="$emit('crop-image', $event)" :label="'Quadrat'"></v-switch>
+        </v-col>
+      </v-row>
     </v-container>
-    <v-btn text v-on:click="$emit('resize-image', sizeSmartphone)">
-      <v-icon>{{ mdiCellphone }}</v-icon>
-    </v-btn>
-    <v-btn text v-on:click="$emit('resize-image', sizeTablet)">
-      <v-icon>{{ mdiTablet }}</v-icon>
-    </v-btn>
-    <v-btn text v-on:click="$emit('resize-image', sizeDesktop)">
-      <v-icon>{{ mdiMonitor }}</v-icon>
-    </v-btn>
-    <v-switch v-on:change="$emit('crop-image', $event)" :label="'Quadrat'"></v-switch>
   </div>
 </template>
 
@@ -47,19 +59,13 @@ export default {
   methods: {
     scaleArbitrary() {
       let inputText = this.widthInput;
-        let val = parseInt(inputText);
-        if(isNaN(val))
-        {
-          alert("plz only input numbr thx");
-        }
-        else
-        {
+      let val = parseInt(inputText);
+      if (isNaN(val)) {
+        alert("plz only input numbr thx");
+      } else {
         this.$emit("resize-image", val);
-        }
       }
     }
+  }
 };
 </script>
-
-<style scoped>
-</style>;
