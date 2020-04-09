@@ -27,8 +27,15 @@ app.post('/', function (req, res, next) {
 app.get('/imagelist', function (req, res, next) {
 
     fs.readdir('data/')
-        .then((fileList) => res.send(fileList));
-
+        .then(fileList => {
+            for (let i = 0; i < fileList.length; i++) {
+                return fs.open('data/' + fileList[i], 'r');
+            }
+        })
+        .then((fileHandle) => fileHandle.stat())
+        .then((stats) => {
+            console.log(stats.birthtime);
+        })
 })
 
 app.get('/image/:img/:size', function (req, res, next) {
@@ -62,12 +69,12 @@ app.get('/image/:img/:size/square', function (req, res, next) {
             return img
                 .crop
                 (
-                    Math.max(0, (img.getWidth() - targetEdge) / 2), 
+                    Math.max(0, (img.getWidth() - targetEdge) / 2),
                     Math.max(0, (img.getHeight() - targetEdge) / 2),
-                    targetEdge, 
+                    targetEdge,
                     targetEdge
-                 )
-                 .resize(sizeParam, sizeParam)
+                )
+                .resize(sizeParam, sizeParam)
                 .getBufferAsync(jimp.MIME_JPEG);
         })
         .then(buffer => {
