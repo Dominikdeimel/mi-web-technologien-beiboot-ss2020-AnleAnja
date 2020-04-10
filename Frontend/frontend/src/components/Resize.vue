@@ -30,7 +30,9 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-switch v-on:change="$emit('crop-image', $event)" :label="'Quadrat'"></v-switch>
+          <div class="cropSwitch">
+          <v-switch v-on:change="$emit('crop-image', $event)" :label="'Crop'"></v-switch>
+          </div>
         </v-col>
       </v-row>
     </v-container>
@@ -69,3 +71,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.cropSwitch{
+  padding-left: 20px;
+}
+</style>

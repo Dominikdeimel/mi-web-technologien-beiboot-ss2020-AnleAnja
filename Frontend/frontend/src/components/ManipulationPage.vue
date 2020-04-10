@@ -8,7 +8,7 @@
       <DeleteImage v-bind:img="img" v-on:deleteImg="$emit('close-image')"/>
     </v-app-bar>
     <div align="center">
-      <v-card class="card">
+      <v-card class="card" elevation="10">
       <ImageComponent v-bind:img="img" v-bind:size="size" v-bind:square="square"></ImageComponent>
       <Resize v-on:resize-image="onResizeButtonClicked" v-on:crop-image="onCropClicked" />
       </v-card>
@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style scoped>
-card {
+.card {
   padding-top: 50px;
   padding-bottom: 50px;
 }

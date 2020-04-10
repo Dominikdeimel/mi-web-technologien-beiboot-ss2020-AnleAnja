@@ -21,3 +21,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.image{
+  display: inline-flex;
+}
+</style>

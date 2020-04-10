@@ -1,12 +1,15 @@
 <template>
   <v-container>
     <v-app-bar app color="light-green darken-3" dark>
-      <Upload v-on:upload="loadImageNames()"/>
+      <Upload v-on:upload="loadImageNames()" />
       <v-spacer></v-spacer>
-      <DeleteAll v-on:deleteImgs="loadImageNames()"/>
+      <DeleteAll v-on:deleteImgs="loadImageNames()" />
     </v-app-bar>
-    <div align="left">
-      <ImageList v-bind:imageNames="imageNames" v-on:open-image="$emit('open-image', $event)" />
+    <div align="center">
+      <ImageList
+        v-bind:imageNames="imageNames"
+        v-on:open-image="$emit('open-image', $event)" />
+      <NoUploads v-if="noImgs"/>
     </div>
   </v-container>
 </template>
@@ -16,12 +19,14 @@ import Upload from "./Upload.vue";
 import ImageList from "./ImageList.vue";
 import DeleteAll from "./DeleteAll";
 import axios from "axios";
+import NoUploads from "./NoUploads";
 
 export default {
   data: () => ({
     imageNames: null,
     files: null,
-    deleteAllImgs: false
+    deleteAllImgs: false,
+    noImgs: null
   }),
   created() {
     this.loadImageNames();
@@ -30,14 +35,23 @@ export default {
   components: {
     Upload,
     ImageList,
-    DeleteAll
+    DeleteAll,
+    NoUploads
   },
   methods: {
     loadImageNames() {
       axios
         .get("http://localhost:3000/imageList")
-        .then(res => this.imageNames = res.data);
+        .then(res => (this.imageNames = res.data));
     }
   }
 };
 </script>
+
+<style scoped>
+@media (min-width: 1264px) {
+  .container {
+    max-width: 100%;
+  }
+}
+</style>

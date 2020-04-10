@@ -4,7 +4,6 @@ var cors = require('cors');
 var fs = require('fs').promises;
 var shortid = require('shortid');
 var jimp = require('jimp');
-const { getSortedImageList } = require("./async");
 
 var app = express();
 var names = [];
@@ -25,12 +24,8 @@ app.post('/', function (req, res, next) {
 
 })
 
-app.get('/imagelist', function (req, res, next) {
+app.get('/imagelist', async function (req, res, next) {
 
-    getSortedImageList()
-        .then(list => res.send(list));
-
-    /*
     fs.readdir('data/')
         .then(fileList => {
             let openFiles = [];
@@ -55,7 +50,6 @@ app.get('/imagelist', function (req, res, next) {
                 .map(v => v.filename);
             res.send(sortedFiles);
         });
-        */
 });
 
 app.get('/image/:img/:size', function (req, res, next) {
@@ -132,7 +126,7 @@ app.delete('/imageList', function (req, res, next) {
             return Promise.all(promises);
         })
         .then(() => {
-            res.send('Alle Bilder wurden gelöscht.')
+            res.send("Alle Bilder wurden gelöscht.");
         })
 })
 

@@ -1,6 +1,7 @@
 <template>
   <div class="listing-container">
-    <ImageComponent style="padding:10px"
+    <ImageComponent
+      style="padding:10px"
       v-for="img in imageNames"
       v-bind:key="img"
       size="400"
