@@ -1,7 +1,5 @@
 <template>
-  <div class="image">
-    <img v-bind:src="getUrl()" v-on:click="$emit('open-image')"/>
-  </div>
+  <img v-bind:src="getUrl()" v-on:click="$emit('open-image')" />
 </template>
 
 <script>
@@ -11,10 +9,9 @@ export default {
   created() {},
   methods: {
     getUrl: function() {
-      if(this.square){
+      if (this.square) {
         return `http://localhost:3000/image/${this.img}/${this.size}/square`;
-      }
-      else{
+      } else {
         return `http://localhost:3000/image/${this.img}/${this.size}`;
       }
     }
@@ -23,7 +20,7 @@ export default {
 </script>
 
 <style scoped>
-.image{
-  display: inline-flex;
+img{
+  height: 100%
 }
 </style>

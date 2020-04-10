@@ -1,6 +1,8 @@
 <template>
   <div class="listing-container">
-    <ImageComponent
+    <NoUploads v-if="imageNames.length === 0"></NoUploads>
+    <template v-if="imageNames.length > 0">
+      <ImageComponent
       style="padding:10px"
       v-for="img in imageNames"
       v-bind:key="img"
@@ -8,18 +10,21 @@
       v-bind:img="img"
       v-on:open-image="$emit('open-image', img)"
     ></ImageComponent>
+    </template>
   </div>
 </template>
 
 <script>
 import Image from "./Image.vue";
+import NoUploads from "./NoUploads.vue";
 
 export default {
   props: ["imageNames"],
   data: () => ({}),
   methods: {},
   components: {
-    ImageComponent: Image
+    ImageComponent: Image,
+    NoUploads
   }
 };
 </script>
@@ -33,5 +38,6 @@ export default {
   width: 100%;
   margin: 0;
   left: 0;
+  height: 200px;
 }
 </style>

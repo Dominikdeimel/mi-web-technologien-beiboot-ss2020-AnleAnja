@@ -57,11 +57,7 @@ app.get('/image/:img/:size', function (req, res, next) {
     let sizeParam = parseInt(req.params.size);
     let img = fs.readFile(`data/${imgParam}/original`)
         .then(img => jimp.read(img))
-        .then(img => {
-            return img
-                .resize(sizeParam, jimp.AUTO)
-                .getBufferAsync(jimp.MIME_JPEG);
-        })
+        .then(img => img.resize(sizeParam, jimp.AUTO).getBufferAsync(jimp.MIME_JPEG))
         .then(buffer => {
             fs.writeFile(`data/${imgParam}/${sizeParam}`, buffer)
                 .then(res.send(buffer))
