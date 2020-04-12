@@ -19,11 +19,17 @@ export default {
   }),
   created() {},
   methods: {
+    /**
+     * @name send#$refs
+     * @type {object}
+     * @property {HTMLInputElement} imgInput
+     */
     send: function() {
       const $emit = this.$emit.bind(this);
-
+      let file = this.$refs.imgInput.files[0];
+      this.$refs.imgInput.value = null;
       axios
-        .post("http://localhost:3000/", this.$refs.imgInput.files[0])
+        .post("http://localhost:3000/", file)
         .then(function(response) {
           $emit("upload");
           console.log(response);
