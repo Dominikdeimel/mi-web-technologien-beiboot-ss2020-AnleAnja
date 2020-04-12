@@ -1,5 +1,5 @@
 <template>
   <div>
-      <h1>Keine Uploads</h1>
+      <h1>Keine Bilder hochgeladen</h1>
   </div>
 </template>
