@@ -1,5 +1,7 @@
 <template>
+    <div style="padding:10px">
     <img v-bind:src="getUrl()" v-on:click="$emit('open-image')"/>
+    </div>
 </template>
 
 <script>
