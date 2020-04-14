@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-app-bar app color="light-green darken-3" dark>
-      <v-btn text v-on:click="$emit('close-image')">
+      <v-btn text @click="$emit('close-image')">
         <v-icon>{{ mdiBack }}</v-icon>
       </v-btn>
       <v-spacer></v-spacer>

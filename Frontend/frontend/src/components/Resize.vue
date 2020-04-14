@@ -31,7 +31,7 @@
       <v-row>
         <v-col>
           <div class="cropSwitch">
-          <v-switch v-on:change="$emit('crop-image', $event)" :label="'Crop'"></v-switch>
+          <v-switch v-on:change="$emit('crop-image', $event)" :label="'Square'"></v-switch>
           </div>
         </v-col>
       </v-row>

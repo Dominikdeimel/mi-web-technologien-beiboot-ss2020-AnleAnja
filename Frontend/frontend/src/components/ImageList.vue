@@ -8,7 +8,7 @@
       v-bind:key="img"
       size="400"
       v-bind:img="img"
-      v-on:open-image="$emit('open-image', img)"
+      @open-image="$emit('open-image', img)"
     ></ImageComponent>
     </template>
   </div>

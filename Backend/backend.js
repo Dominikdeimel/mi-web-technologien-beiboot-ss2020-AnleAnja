@@ -47,20 +47,21 @@ async function convertImg(buffer, size, square) {
 
     let jimpImg = await jimp.read(buffer);
     if (square) {
-        let targetEdge = Math.min(jimpImg.getWidth(), jimpImg.getHeight());
+        const targetEdge = Math.min(jimpImg.getWidth(), jimpImg.getHeight());
         jimpImg = jimpImg.crop(
             Math.max(0, (jimpImg.getWidth() - targetEdge) / 2),
             Math.max(0, (jimpImg.getHeight() - targetEdge) / 2),
             targetEdge,
             targetEdge
         );
-        if (size !== undefined) {
+        /**if (size !== undefined) {
             jimpImg = jimpImg.resize(size, size);
-        }
-    } else if (size !== undefined) {
+        }*/
+    }
+    if (size !== undefined) {
         jimpImg = jimpImg.resize(size, jimp.AUTO);
     }
-    return await jimpImg.getBufferAsync(jimp.MIME_JPEG);
+    return jimpImg.getBufferAsync(jimp.MIME_JPEG);
 }
 
 app.use(cors());
@@ -86,16 +87,16 @@ app.post('/', async function (req, res) {
 
 app.get('/imagelist', async function (req, res) {
 
-    let fileList = await fs.readdir('data/');
-    let data = [];
-    for (let i = 0; i < fileList.length; i++) {
-        let file = await fs.open(`data/${fileList[i]}/original`, 'r');
+    const fileList = await fs.readdir('data/');
+    const data = [];
+    for (const filename of fileList) {
+        let file = await fs.open(`data/${filename}/original`, 'r');
         let stat = await file.stat();
         await file.close();
 
         data.push({
             birthtime: stat.birthtime,
-            filename: fileList[i]
+            filename
         });
     }
     let sortedFiles = data
@@ -106,9 +107,9 @@ app.get('/imagelist', async function (req, res) {
 
 app.get('/image/:tag', async function (req, res) {
 
-    let tagParam = req.params['tag'];
-    let sizeParam = req.query.size;
-    let square = 'square' in req.query;
+    const tagParam = req.params['tag'];
+    const sizeParam = req.query['size'];
+    const square = 'square' in req.query;
     let size;
 
     if (sizeParam !== null) {
@@ -133,13 +134,13 @@ app.get('/image/:tag', async function (req, res) {
 });
 
 app.delete('/imageList', async function (req, res) {
-    let directoryList = await fs.readdir('data');
+    const directoryList = await fs.readdir('data');
 
-    for (let dir of directoryList) {
+    for (const dir of directoryList) {
 
-        let imageDirEntries = await fs.readdir(`data/${dir}`);
+        const imageDirEntries = await fs.readdir(`data/${dir}`);
 
-        for (let imageDirEntry of imageDirEntries) {
+        for (const imageDirEntry of imageDirEntries) {
             await fs.unlink(`data/${dir}/${imageDirEntry}`);
         }
 
@@ -150,12 +151,12 @@ app.delete('/imageList', async function (req, res) {
 });
 
 app.delete('/imageList/:img', async function (req, res) {
-    let imgParam = req.params['img'];
-    let fileList = await fs.readdir('data/' + imgParam);
-    for (let imgFile of fileList) {
-        await fs.unlink(`data/${imgParam}/${imgFile}`);
+    const { img } = req.params;
+    const fileList = await fs.readdir(`data/${img}`);
+    for (const imgFile of fileList) {
+        await fs.unlink(`data/${img}/${imgFile}`);
     }
-    await fs.rmdir(`data/${imgParam}`);
+    await fs.rmdir(`data/${img}`);
     res.send('image deleted');
 });
 

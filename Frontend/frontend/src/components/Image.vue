@@ -1,5 +1,5 @@
 <template>
-    <img v-bind:src="getUrl()" v-on:click="$emit('open-image')"/>
+    <img v-bind:src="getUrl()" @click="$emit('open-image')"/>
 </template>
 
 <script>
