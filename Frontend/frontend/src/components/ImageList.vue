@@ -3,7 +3,6 @@
     <NoUploads v-if="imageNames.length === 0"></NoUploads>
     <template v-if="imageNames.length > 0">
       <ImageComponent
-      style="padding:10px"
       v-for="img in imageNames"
       v-bind:key="img"
       size="400"
