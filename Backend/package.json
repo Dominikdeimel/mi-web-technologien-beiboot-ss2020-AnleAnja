@@ -13,7 +13,9 @@
     "express": "^4.17.1",
     "fs-extra": "^9.0.0",
     "jimp": "^0.10.0",
-    "shortid": "^2.2.15"
+    "madr": "^2.1.2",
+    "shortid": "^2.2.15",
+    "splashy": "^5.0.2"
   },
   "devDependencies": {
     "@types/express": "4.17.6",

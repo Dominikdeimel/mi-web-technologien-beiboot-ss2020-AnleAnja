@@ -1,5 +1,5 @@
 <template>
-  <v-btn text v-on:click="deleteAll">
+  <v-btn text @click="deleteAll">
     <v-icon>{{ mdiDelete }}</v-icon>
   </v-btn>
 </template>

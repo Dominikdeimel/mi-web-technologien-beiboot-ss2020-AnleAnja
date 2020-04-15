@@ -3,6 +3,7 @@ const cors = require('cors');
 const fs = require('fs').promises;
 const shortid = require('shortid');
 const jimp = require('jimp');
+const splashy = require('splashy');
 
 const app = express();
 
@@ -127,6 +128,16 @@ app.get('/image/:tag', async function (req, res) {
     }
     res.set('Content-Type', jimp.MIME_JPEG);
     res.send(result);
+});
+
+app.get('/colors/:tag', async function (req, res) {
+
+    const tag = req.params['tag'];
+    const path = `data/${tag}/original`;
+    const buffer = await fs.readFile(path);
+    const palette = await splashy(buffer);
+
+    res.send(palette);
 });
 
 app.delete('/imageList', async function (req, res) {
