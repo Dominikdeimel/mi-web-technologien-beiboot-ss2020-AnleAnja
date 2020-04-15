@@ -51,12 +51,8 @@ async function convertImg(buffer, size, square) {
         jimpImg = jimpImg.crop(
             Math.max(0, (jimpImg.getWidth() - targetEdge) / 2),
             Math.max(0, (jimpImg.getHeight() - targetEdge) / 2),
-            targetEdge,
-            targetEdge
+            targetEdge,            targetEdge
         );
-        /**if (size !== undefined) {
-            jimpImg = jimpImg.resize(size, size);
-        }*/
     }
     if (size !== undefined) {
         jimpImg = jimpImg.resize(size, jimp.AUTO);
@@ -151,7 +147,7 @@ app.delete('/imageList', async function (req, res) {
 });
 
 app.delete('/imageList/:img', async function (req, res) {
-    const { img } = req.params;
+    const {img} = req.params;
     const fileList = await fs.readdir(`data/${img}`);
     for (const imgFile of fileList) {
         await fs.unlink(`data/${img}/${imgFile}`);
