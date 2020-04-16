@@ -3,9 +3,8 @@
         <v-container>
             <v-row>
                 <v-col v-for="color of colors" :key="color" class="palette">
-                    <div class="color-display" :style="'background-color: ' + color">
-                        {{ color }}
-                    </div>
+                    <div style="text-align: center"> {{color}}</div>
+                    <div class="color-display" :style="'background-color: ' + color"></div>
                 </v-col>
             </v-row>
         </v-container>
@@ -39,10 +38,11 @@
 </script>
 
 <style scoped>
-    .palette{
+    .palette {
         padding: 5px;
     }
-    .color-display{
+
+    .color-display {
         padding: 20px;
         text-align: center;
     }

@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs').promises;
 const shortid = require('shortid');
-const jimp = require('jimp');
+const sharp = require('sharp');
 const splashy = require('splashy');
 
 const app = express();
@@ -45,20 +45,60 @@ async function loadImg(tag, size, square) {
  * @returns {Promise<Buffer>}
  */
 async function convertImg(buffer, size, square) {
+    let sharpImg = await sharp(buffer);
+    const metadata = await sharpImg.metadata();
 
-    let jimpImg = await jimp.read(buffer);
     if (square) {
-        const targetEdge = Math.min(jimpImg.getWidth(), jimpImg.getHeight());
-        jimpImg = jimpImg.crop(
-            Math.max(0, (jimpImg.getWidth() - targetEdge) / 2),
-            Math.max(0, (jimpImg.getHeight() - targetEdge) / 2),
-            targetEdge,            targetEdge
-        );
+        const targetEdge = Math.min(metadata.width, metadata.height);
+        sharpImg = sharpImg
+            .extract({
+                left: Math.floor(Math.max(0, (metadata.width - targetEdge) / 2)),
+                top: Math.floor(Math.max(0, (metadata.height - targetEdge) / 2)),
+                width: targetEdge,
+                height: targetEdge
+            });
     }
     if (size !== undefined) {
-        jimpImg = jimpImg.resize(size, jimp.AUTO);
+        sharpImg = sharpImg
+            .resize(size, null);
     }
-    return jimpImg.getBufferAsync(jimp.MIME_JPEG);
+
+    if(metadata.orientation !== undefined)
+    {
+        sharpImg = applyExifOrientation(metadata.orientation, sharpImg);
+    }
+
+    return await sharpImg.toBuffer();
+}
+
+function applyExifOrientation(orientation, sharpImg)
+{
+    let tmp = sharpImg;
+
+    // noinspection FallThroughInSwitchStatementJS
+    switch(orientation)
+    {
+        case 2:
+            tmp = tmp.flip();
+            break;
+        case 3:
+            tmp = tmp.flip();
+        case 4:
+            tmp = tmp.flop();
+            break;
+        case 5:
+            tmp = tmp.flip();
+        case 6:
+            tmp = tmp.rotate(90);
+            break;
+        case 7:
+            tmp = tmp.flip();
+        case 8:
+            tmp = tmp.rotate(270);
+            break;
+    }
+
+    return tmp;
 }
 
 app.use(cors());
@@ -69,7 +109,7 @@ app.use(express.raw({
 
 app.post('/', async function (req, res) {
     try {
-        await jimp.read(req.body);
+        await sharp(req.body);
     } catch (err) {
         res.sendStatus(415);
         return;
@@ -126,7 +166,6 @@ app.get('/image/:tag', async function (req, res) {
         res.sendStatus(404);
         return;
     }
-    res.set('Content-Type', jimp.MIME_JPEG);
     res.send(result);
 });
 
@@ -136,6 +175,14 @@ app.get('/colors/:tag', async function (req, res) {
     const path = `data/${tag}/original`;
     const buffer = await fs.readFile(path);
     const palette = await splashy(buffer);
+
+    const colors = {
+        image: tag,
+        hexcodes: palette
+    };
+
+    const data = JSON.stringify(colors);
+    await fs.writeFile(`data/${tag}/colors.json`, data);
 
     res.send(palette);
 });

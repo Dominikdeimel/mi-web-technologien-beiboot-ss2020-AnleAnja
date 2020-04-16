@@ -14,11 +14,13 @@
     "fs-extra": "^9.0.0",
     "jimp": "^0.10.0",
     "madr": "^2.1.2",
+    "sharp": "^0.25.2",
     "shortid": "^2.2.15",
     "splashy": "^5.0.2"
   },
   "devDependencies": {
     "@types/express": "4.17.6",
-    "@types/shortid": "0.0.29"
+    "@types/shortid": "0.0.29",
+    "@types/sharp": "^0.24.0"
   }
 }
