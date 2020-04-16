@@ -1,5 +1,5 @@
 <template>
-    <div style="padding:10px">
+    <div>
     <img v-bind:src="getUrl()" v-on:click="$emit('open-image')"/>
     </div>
 </template>
@@ -27,6 +27,10 @@
 
 <style scoped>
     img {
-        height: 100%
+        height: 100%;
+    }
+    div{
+        padding: 10px;
+        text-align: center;
     }
 </style>
