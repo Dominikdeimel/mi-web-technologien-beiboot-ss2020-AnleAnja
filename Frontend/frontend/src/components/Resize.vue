@@ -14,17 +14,17 @@
             </v-row>
             <v-row>
                 <v-col>
-                    <v-btn text @click="$emit('resize-image', sizeSmartphone)">
+                    <v-btn text @click="$emit('resize-image', 'small')">
                         <v-icon>{{ mdiCellphone }}</v-icon>
                     </v-btn>
                 </v-col>
                 <v-col>
-                    <v-btn text @click="$emit('resize-image', sizeTablet)">
+                    <v-btn text @click="$emit('resize-image', 'medium')">
                         <v-icon>{{ mdiTablet }}</v-icon>
                     </v-btn>
                 </v-col>
                 <v-col>
-                    <v-btn text @click="$emit('resize-image', sizeDesktop)">
+                    <v-btn text @click="$emit('resize-image', 'large')">
                         <v-icon>{{ mdiMonitor }}</v-icon>
                     </v-btn>
                 </v-col>
@@ -49,9 +49,6 @@
 
     export default {
         data: () => ({
-            sizeSmartphone: 600,
-            sizeTablet: 700,
-            sizeDesktop: 800,
             mdiResize: mdiResize,
             mdiCellphone: mdiCellphone,
             mdiTablet: mdiTablet,

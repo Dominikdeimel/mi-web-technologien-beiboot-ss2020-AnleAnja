@@ -27,7 +27,7 @@
     export default {
         props: ["img"],
         data: () => ({
-            size: 1000,
+            size: 'default',
             square: false,
             mdiBack: mdiArrowLeft
         }),

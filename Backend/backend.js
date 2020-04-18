@@ -4,8 +4,12 @@ const fs = require('fs').promises;
 const shortid = require('shortid');
 const sharp = require('sharp');
 const splashy = require('splashy');
+const Config = require('./config');
 
 const app = express();
+const config = new Config();
+
+config.getImageSize('small');
 
 /**
  *
@@ -63,21 +67,18 @@ async function convertImg(buffer, size, square) {
             .resize(size, null);
     }
 
-    if(metadata.orientation !== undefined)
-    {
+    if (metadata.orientation !== undefined) {
         sharpImg = applyExifOrientation(metadata.orientation, sharpImg);
     }
 
     return await sharpImg.toBuffer();
 }
 
-function applyExifOrientation(orientation, sharpImg)
-{
+function applyExifOrientation(orientation, sharpImg) {
     let tmp = sharpImg;
 
     // noinspection FallThroughInSwitchStatementJS
-    switch(orientation)
-    {
+    switch (orientation) {
         case 2:
             tmp = tmp.flip();
             break;
@@ -150,14 +151,7 @@ app.get('/image/:tag', async function (req, res) {
     let size;
 
     if (sizeParam !== null) {
-        size = parseInt(sizeParam);
-
-        if (isNaN(size)) {
-            res.status(400);
-            res.send('path is /image/[img: string]/[size: integer]/square');
-            res.end();
-            return;
-        }
+        size = await config.getImageSize(sizeParam);
     }
     let result;
     try {

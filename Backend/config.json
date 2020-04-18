@@ -1,0 +1,9 @@
+{
+  "imageSize": {
+    "small": 500,
+    "medium": 650,
+    "large": 800,
+    "default": 1000,
+    "list": 400
+  }
+}

@@ -5,7 +5,7 @@
             <ImageComponent
                     v-for="img in imageNames"
                     v-bind:key="img"
-                    size="400"
+                    size="list"
                     v-bind:img="img"
                     @open-image="$emit('open-image', img)"
             ></ImageComponent>
