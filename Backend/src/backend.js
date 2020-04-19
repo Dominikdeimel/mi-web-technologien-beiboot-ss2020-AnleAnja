@@ -71,7 +71,9 @@ async function convertImg(buffer, size, square) {
         sharpImg = applyExifOrientation(metadata.orientation, sharpImg);
     }
 
-    return await sharpImg.toBuffer();
+    return await sharpImg
+        .toFormat('jpeg', { quality: 100 })
+        .toBuffer();
 }
 
 function applyExifOrientation(orientation, sharpImg) {
@@ -160,6 +162,8 @@ app.get('/image/:tag', async function (req, res) {
         res.sendStatus(404);
         return;
     }
+
+    res.set("Content-Type", 'image/jpeg');
     res.send(result);
 });
 
