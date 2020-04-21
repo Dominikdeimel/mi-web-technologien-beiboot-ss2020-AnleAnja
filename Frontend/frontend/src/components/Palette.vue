@@ -13,6 +13,7 @@
 
 <script>
     import axios from "axios";
+    import { urlConfig } from "../AppContext";
 
     export default {
         props: ['img'],
@@ -24,8 +25,9 @@
         },
         methods: {
             getColors: function () {
+                const path = urlConfig.getUrl(`colors/${this.img}`);
                 axios
-                    .get(`http://localhost:3000/colors/${this.img}`)
+                    .get(path)
                     .then(function (response) {
                         this.colors = response.data;
                     }.bind(this))

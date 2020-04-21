@@ -5,7 +5,7 @@ module.exports = class Config {
     #config;
 
     constructor() {
-        this.#config = fs.readFile('./config.json', 'utf8')
+        this.#config = fs.readFile('src/config.json', 'utf8')
             .then((configJson) => JSON.parse(configJson));
 
     }

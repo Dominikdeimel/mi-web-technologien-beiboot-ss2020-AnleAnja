@@ -10,6 +10,7 @@
 <script>
 import axios from "axios";
 import { mdiUpload } from "@mdi/js";
+import { urlConfig } from "../AppContext";
 
 export default {
   data: () => ({
@@ -26,10 +27,11 @@ export default {
      */
     send: function() {
       const $emit = this.$emit.bind(this);
+      const path = urlConfig.getUrl();
       let file = this.$refs.imgInput.files[0];
       this.$refs.imgInput.value = null;
       axios
-        .post("http://localhost:3000/", file)
+        .post(path, file)
         .then(function(response) {
           $emit("upload");
           console.log(response);

@@ -5,6 +5,8 @@
 </template>
 
 <script>
+    import { urlConfig } from "../AppContext";
+
     export default {
         props: ['img', 'size', 'square'],
         data: () => ({}),
@@ -12,7 +14,8 @@
         },
         methods: {
             getUrl: function () {
-                let target = new URL(`http://localhost:3000/image/${this.img}`);
+                const path = urlConfig.getUrl(`image/${this.img}`);
+                let target = new URL(path);
                 if (this.square) {
                     target.searchParams.append('square', 'true');
                 }

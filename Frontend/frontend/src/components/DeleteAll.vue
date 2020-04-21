@@ -7,6 +7,7 @@
 <script>
 import axios from "axios";
 import { mdiDelete } from "@mdi/js";
+import { urlConfig } from "../AppContext";
 
 export default {
   data: () => ({
@@ -15,9 +16,11 @@ export default {
   created() {},
   methods: {
     deleteAll: function() {
+
       const $emit = this.$emit.bind(this);
+      const path = urlConfig.getUrl('imageList');
       axios
-        .delete("http://localhost:3000/imageList")
+        .delete(path)
         .then(function(response) {
           $emit("deleteImgs");
           console.log(response);

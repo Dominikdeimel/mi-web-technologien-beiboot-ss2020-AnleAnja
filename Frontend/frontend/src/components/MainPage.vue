@@ -6,7 +6,7 @@
       <DeleteAll v-on:deleteImgs="loadImageNames()" />
     </v-app-bar>
     <div align="center">
-      <ImageList
+      <ImageList v-if="imageNames !== null"
         v-bind:imageNames="imageNames"
         v-on:open-image="$emit('open-image', $event)" />
       <NoUploads v-if="noImgs"/>
@@ -20,6 +20,7 @@ import ImageList from "./ImageList.vue";
 import DeleteAll from "./DeleteAll";
 import axios from "axios";
 import NoUploads from "./NoUploads";
+import { urlConfig } from "../AppContext";
 
 export default {
   data: () => ({
@@ -40,10 +41,12 @@ export default {
   },
   methods: {
     loadImageNames() {
+
+      const path = urlConfig.getUrl('imageList');
       axios
-        .get("http://localhost:3000/imageList")
+        .get(path)
         .then(res => (this.imageNames = res.data));
-    }
+    },
   }
 };
 </script>
