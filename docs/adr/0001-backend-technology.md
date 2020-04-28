@@ -5,7 +5,7 @@
 
 ## Context and Problem Statement
 
-[Describe the context and problem statement, e.g., in free form using two to three sentences. You may want to articulate the problem in form of a question.]
+An independent server backend is important to manage and save the images as well as manipulating them.
 
 ## Considered Options
 
