@@ -135,19 +135,48 @@ NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 
 ### Issues
 
+Keep the configured issue template [issue template]
+
 ### Code
 
-[text]
+#### JavaScript
+
+- Use 4 spaces for indentation
+- Use single quotes for non-template strings
+- No unused variables
+- Always use `===` instead of `==`
+- Infix operators must be spaced
+- Commas should have a space after them
+- Opening curly braces must be placed in the same line as their related keyword
+- Multiple blank lines are not allowed
+- Only `let` and `const` are allowed
+- Use camelCase when naming variables and functions
+- Commas must be placed at the end of the current line
+- Dot should be on the same line as property
 
 ## Workflow
 
-[text]
+- A `develop` branch is created from `master`
+- `feature` branches are created from `develop`
+- When a `feature` is completed it is merged into the `develop` branch
+- When a milestone is completed, the current commit of the `develop` branch receives a Release-Candidate Tag and 
+is used for testing
+- In case issues emerge on a release candidate, they are documented as a bug and developed just like a feature with
+high priority. Upon resolving of all issues the version is tagged as a new release candidate for another testing run.
+- When testing is successful, the release candidate will be merged into the master (no fast-forward)
+- Issues in `master` are documented and resolved in the next milestone, except for hotfixes which are
+  - issues that prevent the application from being used
+  - major issues that can be resolved without risking to break something else
+- `hotfix` branches are created from `master`
+- Once the `hotfix` is completed it is merged to both `develop` and `master`
 
 ## Pull Request Template
 
-[text]
+Keep the configured pull request template [pull request template]
 
 ## Links
 
 - [Setting guidelines for repository contributors](https://help.github.com/en/github/building-a-strong-community/setting-guidelines-for-repository-contributors)
 - [Code of Conduct](https://github.com/todogroup/opencodeofconduct/blob/gh-pages/codeofconduct_redo.md)
+- [Git Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
+- [JavaScript Conventions](https://standardjs.com/rules.html)
