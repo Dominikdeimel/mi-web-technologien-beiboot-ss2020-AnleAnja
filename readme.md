@@ -4,13 +4,32 @@
 
 ## Table of Contents
 
-[content]
+- [About](#about)
+- [Project Setup](#project-setup)
+  - [Install Docker and Docker Compose](#install-docker-and-docker-compose)
+  - [Clone Git Repository](#clone-git-repository)
+  - [Start the System](#start-the-system)
+  - [URL](#url)
+  - [Exit the System](#exit-the-system)
+- [Code of Conduct](#code-of-conduct)
+  - [Diversity Statement](#diversity-statement)
+  - [Expected Behaviors](#expected-behaviors)
+  - [Unacceptable Behaviors](#unacceptable-behaviors)
+  - [Reporting Issues](#reporting-issues)
+- [Contributing](#contributing)
+- [Conventions](#conventions)
+  - [Git Commit Messages](#git-commit-messages)
+  - [Issues](#issues)
+  - [Code](#code)
+- [Workflow](#workflow)
+- [Pull Request Template](#pull-request-template)
+- [Links](#links)
 
-## About this project
+## About
 
 [text]
 
-## Installation
+## Project Setup
 
 [introduction]
 
@@ -110,7 +129,11 @@ NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 
 ### Git Commit Messages
 
-[text]
+- use the past tense
+- use the imperative mood
+- keep it short and simple
+
+### Issues
 
 ### Code
 
@@ -126,4 +149,5 @@ NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 
 ## Links
 
-[Code of Conduct](https://github.com/todogroup/opencodeofconduct/blob/gh-pages/codeofconduct_redo.md)
+- [Setting guidelines for repository contributors](https://help.github.com/en/github/building-a-strong-community/setting-guidelines-for-repository-contributors)
+- [Code of Conduct](https://github.com/todogroup/opencodeofconduct/blob/gh-pages/codeofconduct_redo.md)
