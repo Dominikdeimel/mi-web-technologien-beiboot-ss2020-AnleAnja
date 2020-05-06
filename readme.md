@@ -180,3 +180,5 @@ Keep the configured pull request template [pull request template]
 - [Code of Conduct](https://github.com/todogroup/opencodeofconduct/blob/gh-pages/codeofconduct_redo.md)
 - [Git Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
 - [JavaScript Conventions](https://standardjs.com/rules.html)
+- [GitHub Templates](https://github.com/stevemao/github-issue-templates)
+- [About issue and pull request templates](https://help.github.com/en/github/building-a-strong-community/about-issue-and-pull-request-templates)
