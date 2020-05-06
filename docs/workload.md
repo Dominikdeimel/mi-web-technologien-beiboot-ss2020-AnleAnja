@@ -27,3 +27,11 @@ _(lack of practice in coding)_
 **total workload of 13h**
 
 ## Issue 3
+
+* research contribution guides - 3h
+* code of conduct - 2h
+* conventions - 2h
+* templates - 1h
+* other artefacts - 1h
+
+**total workload of 9h**
