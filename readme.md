@@ -1,6 +1,6 @@
 # Contribution Guide
 
-[introduction]
+The following contents are meant to provide an understanding of the contribution to the **mi-web-technologien-beiboot-ss2020-AnleAnja** Repository and should include all required information.
 
 ## Table of Contents
 
@@ -27,7 +27,7 @@
 
 ## About
 
-[text]
+As part of the "Web Technologies" module, a project that deals with the development of a web application for processing images is being carried out.
 
 ## Project Setup
 
