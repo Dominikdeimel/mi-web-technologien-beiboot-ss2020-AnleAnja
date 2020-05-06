@@ -22,7 +22,7 @@ The following contents are meant to provide an understanding of the contribution
   - [Issues](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/tree/master/.github/ISSUE_TEMPLATE)
   - [Code](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/conventions.md#code)
 - [Workflow](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/workflow.md)
-- [Pull Request Template](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/pull_request_template.md)
+- [Pull Request Template](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/PULL_REQUEST_TEMPLATE.md)
 - [Links](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/sources.md)
 
 ## About
