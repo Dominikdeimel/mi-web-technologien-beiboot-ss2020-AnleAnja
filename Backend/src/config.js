@@ -10,8 +10,7 @@ module.exports = class Config {
 
     }
 
-    async getImageSize(name)
-    {
+    async getImageSize(name) {
         let configObject = await this.#config;
         return configObject['imageSize'][name];
     }

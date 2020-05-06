@@ -72,7 +72,7 @@ async function convertImg(buffer, size, square) {
     }
 
     return await sharpImg
-        .toFormat('jpeg', { quality: 100 })
+        .toFormat('jpeg', {quality: 100})
         .toBuffer();
 }
 
@@ -163,7 +163,7 @@ app.get('/image/:tag', async function (req, res) {
         return;
     }
 
-    res.set("Content-Type", 'image/jpeg');
+    res.set('Content-Type', 'image/jpeg');
     res.send(result);
 });
 
