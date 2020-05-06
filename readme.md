@@ -29,9 +29,11 @@ The following contents are meant to provide an understanding of the contribution
 
 As part of the "Web Technologies" module, a project that deals with the development of a web application for processing images is being carried out.
 
+![Project Screenshot](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/.github/images/about.PNG)
+
 ## Project Setup
 
-[introduction]
+The following setup guide explains in detail how to start the application using Docker
 
 ### Install Docker and Docker Compose
 * Docker & Docker Compose for [Windows](https://docs.docker.com/docker-for-windows/install/)
