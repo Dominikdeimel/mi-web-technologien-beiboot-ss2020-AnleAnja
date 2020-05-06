@@ -13,3 +13,5 @@ high priority. Upon resolving of all issues the version is tagged as a new relea
   - major issues that can be resolved without risking to break something else
 - `hotfix` branches are created from `master`
 - Once the `hotfix` is completed it is merged to both `develop` and `master`
+
+![Gitflow Workflow](https://wac-cdn.atlassian.com/dam/jcr:b5259cce-6245-49f2-b89b-9871f9ee3fa4/03%20(2).svg?cdnVersion=995)
