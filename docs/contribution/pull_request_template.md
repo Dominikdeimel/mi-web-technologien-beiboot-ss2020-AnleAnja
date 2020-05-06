@@ -1,17 +1,48 @@
-### All Submissions:
+## Pull request checklist
 
-* [ ] Have you followed the guidelines in our Contributing document?
-* [ ] Have you checked to ensure there aren't other open [Pull Requests](../../../pulls) for the same update/change?
+Please check if your PR fulfills the following requirements:
+- [ ] Tests for the changes have been added (for bug fixes / features)
+- [ ] Docs have been reviewed and added / updated if needed (for bug fixes / features)
+- [ ] Build (`npm run build`) was run locally and any changes were pushed
+- [ ] Lint (`npm run lint`) has passed locally and any fixes were made for failures
 
-<!-- You can erase any parts of this template not applicable to your Pull Request. -->
 
-### New Feature Submissions:
+## Pull request type
 
-1. [ ] Does your submission pass tests?
-2. [ ] Have you lint your code locally prior to submission?
+_Please do not submit updates to dependencies unless it fixes an issue._
 
-### Changes to Core Features:
+_Please try to limit your pull request to one type, submit multiple pull requests if needed._
 
-* [ ] Have you added an explanation of what your changes do and why you'd like us to include them?
-* [ ] Have you written new tests for your core changes, as applicable?
-* [ ] Have you successfully ran tests with your changes locally?
+Please check the type of change your PR introduces:
+- [ ] Bugfix
+- [ ] Feature
+- [ ] Code style update (formatting, renaming)
+- [ ] Refactoring (no functional changes, no api changes)
+- [ ] Build related changes
+- [ ] Documentation content changes
+- [ ] Other (please describe): 
+
+
+## What is the current behavior?
+_Please describe the current behavior that you are modifying, or link to a relevant issue._
+
+Issue Number: N/A
+
+
+## What is the new behavior?
+_Please describe the behavior or changes that are being added by this PR._
+
+-
+-
+-
+
+## Does this introduce a breaking change?
+
+- [ ] Yes
+- [ ] No
+
+_If this introduces a breaking change, please describe the impact and migration path for existing applications below._
+
+## Other information
+
+_Any other information that is important to this PR such as screenshots of how the component looks before and after the change._
