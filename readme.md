@@ -1,6 +1,6 @@
 # Contribution Guide
 
-The following contents are meant to provide an understanding of the contribution to the **mi-web-technologien-beiboot-ss2020-AnleAnja** Repository and should include all required information.
+The following contents are meant to provide an understanding of the contribution to the **mi-web-technologien-beiboot-ss2020-AnleAnja** repository and should include all required information.
 
 ## About
 
