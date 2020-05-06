@@ -2,9 +2,14 @@
 
 The following contents are meant to provide an understanding of the contribution to the **mi-web-technologien-beiboot-ss2020-AnleAnja** Repository and should include all required information.
 
+## About
+
+As part of the "Web Technologies" module, a project that deals with the development of a web application for processing images is being carried out.
+
+![Project Screenshot](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/.github/images/about.PNG)
+
 ## Table of Contents
 
-- [About](#about)
 - [Project Setup](#project-setup)
   - [Install Docker and Docker Compose](#install-docker-and-docker-compose)
   - [Clone Git Repository](#clone-git-repository)
@@ -24,12 +29,6 @@ The following contents are meant to provide an understanding of the contribution
 - [Workflow](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/workflow.md)
 - [Pull Request Template](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/.github/PULL_REQUEST_TEMPLATE.md)
 - [Links](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/sources.md)
-
-## About
-
-As part of the "Web Technologies" module, a project that deals with the development of a web application for processing images is being carried out.
-
-![Project Screenshot](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/.github/images/about.PNG)
 
 ## Project Setup
 
