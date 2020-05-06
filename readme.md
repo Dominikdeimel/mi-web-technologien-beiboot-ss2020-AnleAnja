@@ -8,6 +8,8 @@ As part of the "Web Technologies" module, a project that deals with the developm
 
 ![Project Screenshot](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/.github/images/about.PNG)
 
+The project ist generally structured in two aspects: **Frontend** and **Backend**. Those aspects are represented in the folders of the repository structure. The Backend includes the backend server, which is a node.js server with express.js. The Frontend consists of a Vue.js Project with the different frontend components.
+
 ## Table of Contents
 
 - [Project Setup](#project-setup)
