@@ -33,7 +33,7 @@ As part of the "Web Technologies" module, a project that deals with the developm
 
 ## Project Setup
 
-[introduction]
+The following setup guide explains in detail how to start the application using Docker
 
 ### Install Docker and Docker Compose
 * Docker & Docker Compose for [Windows](https://docs.docker.com/docker-for-windows/install/)
