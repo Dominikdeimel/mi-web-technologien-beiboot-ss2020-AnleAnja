@@ -10,7 +10,7 @@ added feature   // ok
 
 add feature     // avoid
 ```
-- **use the imperative mood**
+- **use the imperative**
 ```
 move cursor to...   // ok
 
@@ -28,88 +28,107 @@ Regarding coding conventions, JavaScript is the primary language in the Backend.
 
 ### JavaScript
 
-**Use 4 spaces for indentation**
+#### General rules
+
+**Use single quotes for non-template strings**
+```js
+console.log('Hello world')
 ```
+
+**Always use `===` instead of `==`**
+```js
+if (name === 'John')
+```
+
+#### Indentation and spaces
+
+**Use 4 spaces for indentation**
+```js
 function hello (name) {
     console.log('hi', name)
 }
 ```
-**Use single quotes for non-template strings**
-```
-console.log('Hello world')
-```
-**No unused variables**
-```
-function myFunction () {
-    var result = something()   // avoid
-}
-```
-**Always use `===` instead of `==`**
-```
-if (name === 'John')
-```
+
 **Infix operators must be spaced**
-```
+```js
 // ok
-var x = 2
-var message = 'hello, ' + name + '!'
+let x = 2
+let message = 'hello, ' + name + '!'
 
 // avoid
-var x=2
-var message = 'hello, '+name+'!'
+let x=2
+let message = 'hello, '+name+'!'
 ```
+
 **Commas should have a space after them**
-```
+```js
 // ok
-var list = [1, 2, 3, 4]
+let list = [1, 2, 3, 4]
 function greet (name, options) { ... }
 
 // avoid
-var list = [1,2,3,4]
+let list = [1,2,3,4]
 function greet (name,options) { ... }
 ```
-**Opening curly braces must be placed in the same line as their related keyword**
+
+**Multiple blank lines are not allowed**
+```js
+// ok
+let value = 'hello world'
+console.log(value)
+
+// avoid
+let value = 'hello world'
+ 
+ 
+console.log(value)
 ```
-if(condition){
+
+#### Variables
+
+**No unused variables**
+```js
+function myFunction () {
+    let result = something()   // avoid
+}
+```
+
+**Only `let` and `const` are allowed**
+```js
+let x = 123
+const y = "abc"
+```
+
+**Use camelCase when naming variables and functions**
+```js
+function my_function () { }    // avoid
+function myFunction () { }     // ok
+ 
+let my_let = 'hello'           // avoid
+let myLet = 'hello'            // ok
+```
+
+#### Code format
+
+**Opening curly braces must be placed in the same line as their related keyword**
+```js
+if(condition) {
     // ...
 } else {
     // ...
 }
 ```
-**Multiple blank lines are not allowed**
-```
-// ok
-var value = 'hello world'
-console.log(value)
 
-// avoid
-var value = 'hello world'
- 
- 
-console.log(value)
-```
-**Only `let` and `const` are allowed**
-```
-let x = 123
-const y = "abc"
-```
-**Use camelCase when naming variables and functions**
-```
-function my_function () { }    // avoid
-function myFunction () { }     // ok
- 
-var my_var = 'hello'           // avoid
-var myVar = 'hello'            // ok
-```
 **Commas must be placed at the end of the current line**
-```
-var obj = {
+```js
+let obj = {
     foo: 'foo',
     bar: 'bar'   
   }
 ```
-**Dot should be on the same line as property**
-```
+
+**Dot should be on the same line as property except for chained method calls**
+```js
 console
     .log('hello')
 ```
