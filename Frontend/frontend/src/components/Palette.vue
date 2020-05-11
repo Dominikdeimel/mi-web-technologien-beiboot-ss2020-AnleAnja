@@ -12,31 +12,31 @@
 </template>
 
 <script>
-    import axios from "axios";
-    import { urlConfig } from "../AppContext";
+import axios from 'axios';
+import { urlConfig } from '../AppContext';
 
-    export default {
-        props: ['img'],
-        data: () => ({
-            colors: []
-        }),
-        created() {
-            this.getColors();
-        },
-        methods: {
-            getColors: function () {
-                const path = urlConfig.getUrl(`colors/${this.img}`);
-                axios
-                    .get(path)
-                    .then(function (response) {
-                        this.colors = response.data;
-                    }.bind(this))
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            }
+export default {
+    props: ['img'],
+    data: () => ({
+        colors: []
+    }),
+    created() {
+        this.getColors();
+    },
+    methods: {
+        getColors: function () {
+            const path = urlConfig.getUrl(`colors/${this.img}`);
+            axios
+                .get(path)
+                .then(function (response) {
+                    this.colors = response.data;
+                }.bind(this))
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
-    };
+    }
+};
 </script>
 
 <style scoped>

@@ -8,39 +8,39 @@
 </template>
 
 <script>
-import axios from "axios";
-import { mdiUpload } from "@mdi/js";
-import { urlConfig } from "../AppContext";
+import axios from 'axios';
+import { mdiUpload } from '@mdi/js';
+import { urlConfig } from '../AppContext';
 
 export default {
-  data: () => ({
-    imgs: null,
-    size: null,
-    mdiUpload: mdiUpload
-  }),
-  created() {},
-  methods: {
+    data: () => ({
+        imgs: null,
+        size: null,
+        mdiUpload: mdiUpload
+    }),
+    created() {},
+    methods: {
     /**
      * @name send#$refs
      * @type {object}
      * @property {HTMLInputElement} imgInput
      */
-    send: function() {
-      const $emit = this.$emit.bind(this);
-      const path = urlConfig.getUrl();
-      let file = this.$refs.imgInput.files[0];
-      this.$refs.imgInput.value = null;
-      axios
-        .post(path, file)
-        .then(function(response) {
-          $emit("upload");
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+        send: function() {
+            const $emit = this.$emit.bind(this);
+            const path = urlConfig.getUrl();
+            let file = this.$refs.imgInput.files[0];
+            this.$refs.imgInput.value = null;
+            axios
+                .post(path, file)
+                .then(function(response) {
+                    $emit('upload');
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
     }
-  }
 };
 </script>
 

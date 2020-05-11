@@ -25,7 +25,7 @@ async function loadImg(tag, size, square) {
     await fs.access(path);
 
     if (size !== undefined) path += `${size}${square ? '-square' : ''}`;
-    else path += square ? `square` : `original`;
+    else path += square ? 'square' : 'original';
 
     let buffer;
     try {

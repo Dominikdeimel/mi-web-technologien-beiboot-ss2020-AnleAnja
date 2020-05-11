@@ -41,33 +41,33 @@
 </template>
 
 <script>
-    import {mdiResize} from "@mdi/js";
-    import {mdiCellphone} from "@mdi/js";
-    import {mdiTablet} from "@mdi/js";
-    import {mdiMonitor} from "@mdi/js";
-    import {mdiCrop} from "@mdi/js";
+import {mdiResize} from '@mdi/js';
+import {mdiCellphone} from '@mdi/js';
+import {mdiTablet} from '@mdi/js';
+import {mdiMonitor} from '@mdi/js';
+import {mdiCrop} from '@mdi/js';
 
-    export default {
-        data: () => ({
-            mdiResize: mdiResize,
-            mdiCellphone: mdiCellphone,
-            mdiTablet: mdiTablet,
-            mdiMonitor: mdiMonitor,
-            mdiCrop: mdiCrop,
-            widthInput: undefined
-        }),
-        methods: {
-            scaleArbitrary() {
-                let inputText = this.widthInput;
-                let val = parseInt(inputText);
-                if (isNaN(val)) {
-                    alert("Please only put numbers");
-                } else {
-                    this.$emit("resize-image", val);
-                }
+export default {
+    data: () => ({
+        mdiResize: mdiResize,
+        mdiCellphone: mdiCellphone,
+        mdiTablet: mdiTablet,
+        mdiMonitor: mdiMonitor,
+        mdiCrop: mdiCrop,
+        widthInput: undefined
+    }),
+    methods: {
+        scaleArbitrary() {
+            let inputText = this.widthInput;
+            let val = parseInt(inputText);
+            if (isNaN(val)) {
+                alert('Please only put numbers');
+            } else {
+                this.$emit('resize-image', val);
             }
         }
-    };
+    }
+};
 </script>
 
 <style scoped>

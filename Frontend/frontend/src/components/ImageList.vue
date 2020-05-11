@@ -14,18 +14,18 @@
 </template>
 
 <script>
-    import Image from "./Image.vue";
-    import NoUploads from "./NoUploads.vue";
+import Image from './Image.vue';
+import NoUploads from './NoUploads.vue';
 
-    export default {
-        props: ["imageNames"],
-        data: () => ({}),
-        methods: {},
-        components: {
-            ImageComponent: Image,
-            NoUploads
-        }
-    };
+export default {
+    props: ['imageNames'],
+    data: () => ({}),
+    methods: {},
+    components: {
+        ImageComponent: Image,
+        NoUploads
+    }
+};
 </script>
 
 <style scoped>
