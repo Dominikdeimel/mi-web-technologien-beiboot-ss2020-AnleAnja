@@ -8,7 +8,7 @@ This project, which was implemented as part of the module "Web Technologies", de
 
 ![Project Screenshot](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/.github/images/about.PNG)
 
-The project ist generally structured in two aspects: **Frontend** and **Backend**. Those aspects are represented in the folders of the repository structure. The Backend includes the image persistance and image processing, which is implemented with a Node.js server using express.js. The Frontend consists of a http server that listens on port 8080. On the '/'-path is a Vue.js application that represents the frontend.
+The project ist generally structured in two aspects: **Frontend** and **Backend**. Those aspects are represented in the folders of the repository structure. The Backend includes the image persistance and image processing, which is implemented with a Node.js server using express.js. The Frontend consists of a http server that listens on port `8080`. On `/`, there is a Vue.js application that represents the frontend.
 
 ## Table of Contents
 
