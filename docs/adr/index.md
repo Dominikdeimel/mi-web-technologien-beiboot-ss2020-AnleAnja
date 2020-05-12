@@ -5,6 +5,9 @@ This log lists the architectural decisions for [project name].
 <!-- adrlog -- Regenerate the content by using "adr-log -i". You can install it via "npm install -g adr-log" -->
 
 - [ADR-0000](0000-use-markdown-architectural-decision-records.md) - Use Markdown Architectural Decision Records
+- [ADR-0001](0001-backend-technology.md) - Node.js and Express.js for backend development
+- [ADR-0002](0002-frontend-technology.md) - Vue.js and Vuetify for frontend development
+- [ADR-0003](0003-image-manipulation.md) - sharp and splashy as libraries for image manipulation
 
 <!-- adrlogstop -->
 

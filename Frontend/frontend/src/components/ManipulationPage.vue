@@ -18,35 +18,35 @@
 </template>
 
 <script>
-    import Resize from "./Resize.vue";
-    import Image from "./Image.vue";
-    import DeleteImage from "./DeleteImage.vue";
-    import {mdiArrowLeft} from "@mdi/js";
-    import Palette from "./Palette";
+import Resize from './Resize.vue';
+import Image from './Image.vue';
+import DeleteImage from './DeleteImage.vue';
+import {mdiArrowLeft} from '@mdi/js';
+import Palette from './Palette';
 
-    export default {
-        props: ["img"],
-        data: () => ({
-            size: 'default',
-            square: false,
-            mdiBack: mdiArrowLeft
-        }),
-        name: "App",
-        components: {
-            Palette,
-            Resize,
-            ImageComponent: Image,
-            DeleteImage
+export default {
+    props: ['img'],
+    data: () => ({
+        size: 'default',
+        square: false,
+        mdiBack: mdiArrowLeft
+    }),
+    name: 'App',
+    components: {
+        Palette,
+        Resize,
+        ImageComponent: Image,
+        DeleteImage
+    },
+    methods: {
+        onResizeButtonClicked: function (size) {
+            this.size = size;
         },
-        methods: {
-            onResizeButtonClicked: function (size) {
-                this.size = size;
-            },
-            onCropClicked: function (state) {
-                this.square = state;
-            }
+        onCropClicked: function (state) {
+            this.square = state;
         }
-    };
+    }
+};
 </script>
 
 <style scoped>
