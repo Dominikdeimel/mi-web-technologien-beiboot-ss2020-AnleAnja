@@ -132,4 +132,9 @@ let obj = {
 ```js
 console
     .log('hello')
+    
+builder.start()
+    .addSomething()
+    .addSomethingElse()
+    .build();
 ```
