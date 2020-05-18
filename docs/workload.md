@@ -39,6 +39,8 @@ _(lack of practice in coding)_
 ## Issue 4
 
 * docker - 4h
-* scaffolding - tbd
+* scaffolding - 1h
 * misc - 1h
-* contribution - tbd (4h)
+* contribution - 6h
+
+**total workload of 12h**
