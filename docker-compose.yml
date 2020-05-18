@@ -1,10 +1,17 @@
-version: '3'
+version: '3.2'
 services:
   backend:
     build: Backend
     ports:
       - "3000:3000"
+    volumes:
+      - type: volume
+        source: mydata
+        target: /app/data
+
   frontend:
     build: Frontend/frontend
     ports:
       - "8080:8080"
+volumes:
+  mydata:

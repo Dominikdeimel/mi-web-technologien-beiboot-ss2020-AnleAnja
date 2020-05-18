@@ -6,10 +6,9 @@ COPY package.json .
 RUN npm install
 
 COPY src/ src/
-RUN mkdir data/
+COPY config.json .
+VOLUME /app/data/
 
 EXPOSE 3000
-
-WORKDIR src/
 
 CMD ["node", "src/backend.js"]
