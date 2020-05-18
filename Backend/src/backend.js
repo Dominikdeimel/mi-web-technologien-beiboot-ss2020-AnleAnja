@@ -16,16 +16,18 @@ config.getImageSize('small');
  * @param {string} tag
  * @param {number} size
  * @param {boolean} square
+ * @param {boolean} [sharpen]
+ * @param {boolean} [blur]
  * @returns {Promise<Buffer>}
  */
-async function loadImg(tag, size, square) {
+async function loadImg(tag, size, square, sharpen, blur) {
 
     let path = `../data/${tag}/`;
 
-    await fs.access(path);
-
     if (size !== undefined) path += `${size}${square ? '-square' : ''}`;
     else path += square ? 'square' : 'original';
+
+    path += `${sharpen ? '-sharp' : ''}${blur ? '-blur' : ''}`;
 
     let buffer;
     try {
@@ -33,7 +35,7 @@ async function loadImg(tag, size, square) {
         buffer = fs.readFile(path);
     } catch (e) {
         let original = await fs.readFile(`../data/${tag}/original`);
-        buffer = await convertImg(original, size, square);
+        buffer = await convertImg(original, size, square, sharpen, blur);
         await fs.writeFile(path, buffer);
     }
 
@@ -46,9 +48,11 @@ async function loadImg(tag, size, square) {
  * @param {Buffer} buffer The buffer of the image that should be converted
  * @param {number} [size]
  * @param {boolean} [square]
+ * @param {boolean} [sharpen]
+ * @param {boolean} [blur]
  * @returns {Promise<Buffer>}
  */
-async function convertImg(buffer, size, square) {
+async function convertImg(buffer, size, square,sharpen, blur) {
     let sharpImg = await sharp(buffer);
     const metadata = await sharpImg.metadata();
 
@@ -70,11 +74,19 @@ async function convertImg(buffer, size, square) {
     if (metadata.orientation !== undefined) {
         sharpImg = applyExifOrientation(metadata.orientation, sharpImg);
     }
-
+    if(sharpen){
+        sharpImg = sharpImg
+            .sharpen();
+    }
+    if(blur){
+        sharpImg = sharpImg
+            .blur();
+    }
     return await sharpImg
         .toFormat('jpeg', {quality: 100})
         .toBuffer();
 }
+
 
 function applyExifOrientation(orientation, sharpImg) {
     let tmp = sharpImg;
@@ -150,6 +162,8 @@ app.get('/image/:tag', async function (req, res) {
     const tagParam = req.params['tag'];
     const sizeParam = req.query['size'];
     const square = 'square' in req.query;
+    const sharpen = 'sharpen' in req.query;
+    const blur = 'blur' in req.query;
     let size;
 
     if (sizeParam !== null) {
@@ -157,7 +171,8 @@ app.get('/image/:tag', async function (req, res) {
     }
     let result;
     try {
-        result = await loadImg(tagParam, size, square);
+        result = await loadImg(tagParam, size, square, sharpen, blur);
+
     } catch (e) {
         res.sendStatus(404);
         return;
