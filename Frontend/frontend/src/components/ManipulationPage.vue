@@ -9,8 +9,8 @@
         </v-app-bar>
         <div>
             <v-card class="card" elevation="10">
-                <ImageComponent v-bind:img="img" v-bind:size="size" v-bind:square="square"></ImageComponent>
-                <Resize v-on:resize-image="onResizeButtonClicked" v-on:crop-image="onCropClicked"/>
+                <ImageComponent v-bind:img="img" v-bind:size="size" v-bind:square="square" v-bind:sharpen="sharpen" v-bind:blur="blur"></ImageComponent>
+                <Resize v-on:resize-image="onResizeButtonClicked" v-on:crop-image="onCropClicked" v-on:change-sharpen-blur="onSharpBlurClicked"/>
                 <Palette v-bind:img="img"></Palette>
             </v-card>
         </div>
@@ -29,7 +29,9 @@ export default {
     data: () => ({
         size: 'default',
         square: false,
-        mdiBack: mdiArrowLeft
+        mdiBack: mdiArrowLeft,
+        sharpen: false,
+        blur: false
     }),
     name: 'App',
     components: {
@@ -44,6 +46,18 @@ export default {
         },
         onCropClicked: function (state) {
             this.square = state;
+        },
+        onSharpBlurClicked(event){
+            if (event === 'sharpen') {
+                this.sharpen = true;
+                this.blur = false;
+            } else if (event === 'blur') {
+                this.sharpen = false;
+                this.blur = true;
+            } else {
+                this.sharpen = false;
+                this.blur = false;
+            }
         }
     }
 };
