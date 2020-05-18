@@ -21,6 +21,7 @@ The project ist generally structured in two aspects: **Frontend** and **Backend*
 - [Local Setup](#local-setup)
   - [Frontend](#frontend)
   - [Backend](#backend)
+- [Scaffolding](#scaffolding)
 - [Code of Conduct](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/code-of-conduct.md)
   - [Diversity Statement](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/code-of-conduct.md#diversity-statement)
   - [Expected Behaviors](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/code-of-conduct.md#expected-behaviors)
@@ -82,3 +83,12 @@ The following setup guide explains how to start the application without Docker
 * `cd src`
 
 * `node backend.js`
+
+## Scaffolding
+
+Sets up a data folder with 31 image records
+
+* `docker-compose up -d`
+* `docker ps`
+* copy the Backend **CONTAINER ID**
+* `docker cp ./Scaffolding/data <CONTAINER ID>:/app/`
