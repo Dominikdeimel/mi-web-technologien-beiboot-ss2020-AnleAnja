@@ -36,6 +36,16 @@
                     </div>
                 </v-col>
             </v-row>
+            <v-row style="width: 400px">
+                <v-radio-group row v-model="radioGroup" @change="$emit('change-sharpen-blur', radioGroup.toLowerCase())">
+                    <v-radio
+                            v-for="title in radioGroupTitles"
+                            :key="title"
+                            :label="title"
+                            :value="title.toLowerCase()"
+                    ></v-radio>
+                </v-radio-group>
+            </v-row>
         </v-container>
     </div>
 </template>
@@ -54,7 +64,9 @@ export default {
         mdiTablet: mdiTablet,
         mdiMonitor: mdiMonitor,
         mdiCrop: mdiCrop,
-        widthInput: undefined
+        widthInput: undefined,
+        radioGroupTitles: ['None','Sharpen','Blur'],
+        radioGroup: 'None'
     }),
     methods: {
         scaleArbitrary() {

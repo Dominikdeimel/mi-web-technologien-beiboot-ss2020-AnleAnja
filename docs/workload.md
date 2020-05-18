@@ -32,6 +32,13 @@ _(lack of practice in coding)_
 * code of conduct - 2h
 * conventions - 2h
 * templates - 1h
-* other artefacts - 1h
+* other artefacts - 2h
 
-**total workload of 9h**
+**total workload of 10h**
+
+## Issue 4
+
+* docker - 4h
+* scaffolding - tbd
+* misc - 1h
+* contribution - tbd (4h)
