@@ -112,6 +112,11 @@ app.use(express.raw({
 
 app.post('/', async function (req, res) {
     try {
+        await fs.access('../data');
+    } catch (e) {
+        await fs.mkdir('../data');
+    }
+    try {
         await sharp(req.body);
     } catch (err) {
         res.sendStatus(415);
