@@ -4,11 +4,11 @@ The following points describe how [Git Commit Messages](#git-commit-messages), [
 
 ## Git Commit Messages
 
-- **use the past tense**
+- **use the present tense**
 ```
-added feature   // ok
+add feature     // ok
 
-add feature     // avoid
+added feature   // avoid
 ```
 - **use the imperative**
 ```
@@ -21,6 +21,12 @@ moves cursor to...  // avoid
 ## Issues
 
 Keep the configured [issue template](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/tree/master/.github/ISSUE_TEMPLATE).
+
+## Documentation
+
+All architectural or design decisions have to be documented using [ADR](https://adr.github.io/). Every documentation file uses the [Template](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/adr/template.md) as a base and is integrated in the [Index](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/adr/index.md) as soon as the file is completed. The ADR documentation is written in Markdown. It's important to document every decision so that everyone can retrace the evaluation and take a look at the considered decisions.
+
+The naming of the individual files should follow this pattern: **"0001-general-topic.md"**
 
 ## Code
 
