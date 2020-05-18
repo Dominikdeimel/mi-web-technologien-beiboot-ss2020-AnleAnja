@@ -12,12 +12,13 @@ The project ist generally structured in two aspects: **Frontend** and **Backend*
 
 ## Table of Contents
 
-- [Project Setup](#project-setup)
+- [Docker Setup](#docker-setup)
   - [Install Docker and Docker Compose](#install-docker-and-docker-compose)
   - [Clone Git Repository](#clone-git-repository)
   - [Start the System](#start-the-system)
   - [URL](#url)
   - [Exit the System](#exit-the-system)
+- [Local Setup](#local-setup)
 - [Code of Conduct](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/code-of-conduct.md)
   - [Diversity Statement](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/code-of-conduct.md#diversity-statement)
   - [Expected Behaviors](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/code-of-conduct.md#expected-behaviors)
@@ -27,12 +28,13 @@ The project ist generally structured in two aspects: **Frontend** and **Backend*
 - [Conventions](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/conventions.md)
   - [Git Commit Messages](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/conventions.md#git-commit-messages)
   - [Issues](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/tree/master/.github/ISSUE_TEMPLATE)
+  - [Documentation](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/conventions.md#documentation)
   - [Code](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/conventions.md#code)
 - [Workflow](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/workflow.md)
 - [Pull Request Template](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/.github/PULL_REQUEST_TEMPLATE.md)
 - [Links](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/docs/contribution/sources.md)
 
-## Project Setup
+## Docker Setup
 
 The following setup guide explains in detail how to start the application using Docker
 
@@ -56,3 +58,25 @@ The System ist available at: http://localhost:8080
 ### Exit the System
     
 `docker-compose down`
+
+## Local Setup
+
+The following setup guide explains how to start the application without Docker
+
+### Frontend
+
+* `cd Frontend/Frontend`
+
+* Follow [this](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/Frontend/frontend/README.md) setup guide
+
+* Access the application at http://localhost:8080
+
+### Backend
+
+* `cd Backend`
+
+* `npm install`
+
+* `cd src`
+
+* `node backend.js`
