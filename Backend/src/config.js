@@ -3,7 +3,7 @@ const fs = require('fs').promises;
 module.exports = class Config {
 
     constructor() {
-        this.config = fs.readFile('./config.json', 'utf8')
+        this.config = fs.readFile('../config.json', 'utf8')
             .then((configJson) => JSON.parse(configJson));
 
     }
