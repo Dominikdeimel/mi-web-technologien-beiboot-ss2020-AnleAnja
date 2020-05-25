@@ -56,7 +56,7 @@ The following setup guide explains in detail how to start the application using 
 
 ### Scaffolding
 
-Sets up a data folder with 31 image records
+Sets up a data folder with 31 image records. The images are provided by [Unplash](https://unsplash.com/).
 
 * `docker ps`
 * copy the Backend **CONTAINER ID**
