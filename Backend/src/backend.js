@@ -5,6 +5,7 @@ const shortid = require('shortid');
 const sharp = require('sharp');
 const splashy = require('splashy');
 const Config = require('./config');
+const path = require('path');
 
 const app = express();
 const config = new Config();
@@ -22,21 +23,21 @@ config.getImageSize('small');
  */
 async function loadImg(tag, size, square, sharpen, blur) {
 
-    let path = `../data/${tag}/`;
+    let imgPath = path.join(__dirname, `../data/${tag}/`);
 
-    if (size !== undefined) path += `${size}${square ? '-square' : ''}`;
-    else path += square ? 'square' : 'original';
+    if (size !== undefined) imgPath += `${size}${square ? '-square' : ''}`;
+    else imgPath += square ? 'square' : 'original';
 
-    path += `${sharpen ? '-sharp' : ''}${blur ? '-blur' : ''}`;
+    imgPath += `${sharpen ? '-sharp' : ''}${blur ? '-blur' : ''}`;
 
     let buffer;
     try {
-        await fs.access(path);
-        buffer = fs.readFile(path);
+        await fs.access(imgPath);
+        buffer = fs.readFile(imgPath);
     } catch (e) {
-        let original = await fs.readFile(`../data/${tag}/original`);
+        let original = await fs.readFile(path.join(__dirname, `../data/${tag}/original`));
         buffer = await convertImg(original, size, square, sharpen, blur);
-        await fs.writeFile(path, buffer);
+        await fs.writeFile(imgPath, buffer);
     }
 
     return buffer;
@@ -52,7 +53,7 @@ async function loadImg(tag, size, square, sharpen, blur) {
  * @param {boolean} [blur]
  * @returns {Promise<Buffer>}
  */
-async function convertImg(buffer, size, square,sharpen, blur) {
+async function convertImg(buffer, size, square, sharpen, blur) {
     let sharpImg = await sharp(buffer);
     const metadata = await sharpImg.metadata();
 
@@ -74,11 +75,11 @@ async function convertImg(buffer, size, square,sharpen, blur) {
     if (metadata.orientation !== undefined) {
         sharpImg = applyExifOrientation(metadata.orientation, sharpImg);
     }
-    if(sharpen){
+    if (sharpen) {
         sharpImg = sharpImg
             .sharpen();
     }
-    if(blur){
+    if (blur) {
         sharpImg = sharpImg
             .blur();
     }
@@ -86,7 +87,6 @@ async function convertImg(buffer, size, square,sharpen, blur) {
         .toFormat('jpeg', {quality: 100})
         .toBuffer();
 }
-
 
 function applyExifOrientation(orientation, sharpImg) {
     let tmp = sharpImg;
@@ -116,38 +116,12 @@ function applyExifOrientation(orientation, sharpImg) {
     return tmp;
 }
 
-app.use(cors());
+async function imageReader() {
 
-app.use(express.raw({
-    type: '*/*', limit: '4gb'
-}));
-
-app.post('/', async function (req, res) {
-    try {
-        await fs.access('../data');
-    } catch (e) {
-        await fs.mkdir('../data');
-    }
-    try {
-        await sharp(req.body);
-    } catch (err) {
-        res.sendStatus(415);
-        return;
-    }
-    let id = shortid.generate();
-    await fs.mkdir(`../data/${id}`);
-    let buffer = await convertImg(req.body);
-    await fs.writeFile(`../data/${id}/original`, buffer);
-    res.end();
-
-});
-
-app.get('/imagelist', async function (req, res) {
-
-    const fileList = await fs.readdir('../data/');
+    const fileList = await fs.readdir(path.join(__dirname, '../data/'));
     const data = [];
     for (const filename of fileList) {
-        let file = await fs.open(`../data/${filename}/original`, 'r');
+        let file = await fs.open(path.join(__dirname, `../data/${filename}/original`), 'r');
         let stat = await file.stat();
         await file.close();
 
@@ -156,10 +130,84 @@ app.get('/imagelist', async function (req, res) {
             filename
         });
     }
-    let sortedFiles = data
+    return data
+        .sort(() => Math.random() - 0.5);
+
+}
+
+async function chooseSorting(sort) {
+    try {
+        let images = [];
+        if (sort === 'birthtime') {
+            images = birthtimeSort(await imageReader());
+        } else if (sort === 'alphabetically') {
+            images = nameSort(await imageReader());
+        } else if (sort === 'random') {
+            images = await imageReader();
+        }
+        return images;
+    } catch (e) {
+        return e;
+    }
+}
+
+function birthtimeSort(data) {
+    return data
         .sort((a, b) => a.birthtime - b.birthtime)
         .map(v => v.filename);
-    res.send(sortedFiles);
+}
+
+function nameSort(data) {
+    return data.sort(function (a, b) {
+        let textA = a.filename.toUpperCase();
+        let textB = b.filename.toUpperCase();
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
+}
+
+function chooseAmount(sortedImages, count) {
+    if(count >= sortedImages.length){
+        return sortedImages;
+    }
+    else{
+        return sortedImages.slice(0, count);
+    }
+}
+
+async function writeResponse(images) {
+    const data = JSON.stringify(images);
+    await fs.writeFile(path.join(__dirname, '../imageData.json'), data);
+}
+
+app.use(cors());
+
+app.use(express.raw({
+    type: '*/*', limit: '4gb'
+
+}));
+
+app.post('/', async function (req, res) {
+    try {
+        await fs.access(path.join(__dirname, '../data'));
+    } catch (e) {
+        await fs.mkdir(path.join(__dirname, '../data'));
+    }
+    try {
+        await sharp(req.body);
+    } catch (err) {
+        res.sendStatus(415);
+        return;
+    }
+    let id = shortid.generate();
+    await fs.mkdir(path.join(__dirname, `../data/${id}`));
+    let buffer = await convertImg(req.body);
+    await fs.writeFile(path.join(__dirname, `../data/${id}/original`), buffer);
+    res.end();
+
+});
+
+app.get('/imagelist', async function (req, res) {
+    res.send(birthtimeSort(await imageReader()));
 });
 
 app.get('/image/:tag', async function (req, res) {
@@ -190,8 +238,8 @@ app.get('/image/:tag', async function (req, res) {
 app.get('/colors/:tag', async function (req, res) {
 
     const tag = req.params['tag'];
-    const path = `../data/${tag}/original`;
-    const buffer = await fs.readFile(path);
+    const originalPath = path.join(__dirname, `../data/${tag}/original`);
+    const buffer = await fs.readFile(originalPath);
     const palette = await splashy(buffer);
 
     const colors = {
@@ -200,23 +248,23 @@ app.get('/colors/:tag', async function (req, res) {
     };
 
     const data = JSON.stringify(colors);
-    await fs.writeFile(`../data/${tag}/colors.json`, data);
+    await fs.writeFile(path.join(__dirname, `../data/${tag}/colors.json`), data);
 
     res.send(palette);
 });
 
 app.delete('/imageList', async function (req, res) {
-    const directoryList = await fs.readdir('../data');
+    const directoryList = await fs.readdir(path.join(__dirname, '../data'));
 
     for (const dir of directoryList) {
 
-        const imageDirEntries = await fs.readdir(`../data/${dir}`);
+        const imageDirEntries = await fs.readdir(path.join(__dirname, `../data/${dir}`));
 
         for (const imageDirEntry of imageDirEntries) {
-            await fs.unlink(`../data/${dir}/${imageDirEntry}`);
+            await fs.unlink(path.join(__dirname, `../data/${dir}/${imageDirEntry}`));
         }
 
-        await fs.rmdir(`../data/${dir}`);
+        await fs.rmdir(path.join(__dirname, `../data/${dir}`));
 
     }
     res.send('all images deleted');
@@ -224,12 +272,32 @@ app.delete('/imageList', async function (req, res) {
 
 app.delete('/imageList/:img', async function (req, res) {
     const {img} = req.params;
-    const fileList = await fs.readdir(`../data/${img}`);
+    const fileList = await fs.readdir(path.join(__dirname, `../data/${img}`));
     for (const imgFile of fileList) {
-        await fs.unlink(`../data/${img}/${imgFile}`);
+        await fs.unlink(path.join(__dirname, `../data/${img}/${imgFile}`));
     }
-    await fs.rmdir(`../data/${img}`);
+    await fs.rmdir(path.join(__dirname, `../data/${img}`));
     res.send('image deleted');
+});
+
+app.get('/imageData/:sort', async function (req, res) {
+    const sort = req.params['sort'];
+    const count = req.query['count'];
+    let sortedImages;
+    let responseImages;
+    sortedImages = await chooseSorting(sort);
+    if (count !== null) {
+        responseImages = await chooseAmount(sortedImages, count);
+        await writeResponse(responseImages);
+    } else {
+        responseImages = sortedImages;
+        await writeResponse(responseImages);
+    }
+
+    res.send(responseImages);
+
+    //nach Reihenfolge der Hauptfarbe im Farbkreis
+    //API Dokumentation
 });
 
 app.listen(3000, function () {
