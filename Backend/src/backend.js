@@ -360,8 +360,8 @@ app.delete('/imageList/:img', async function (req, res) {
     res.send('image deleted');
 });
 
-app.get('/imageData/:sort', async function (req, res) {
-    const sort = req.params['sort'];
+app.get('/api/imageData', async function (req, res) {
+    const sort = req.query['sort'];
     const count = req.query['count'];
     const order = req.query['order'];
     let sortedImages;
@@ -383,8 +383,6 @@ app.get('/imageData/:sort', async function (req, res) {
 
     res.send(responseImages);
 
-    //nach Reihenfolge der Hauptfarbe im Farbkreis
-    //API Dokumentation
 });
 
 app.listen(3000, function () {
