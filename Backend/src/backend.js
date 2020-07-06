@@ -363,14 +363,21 @@ app.delete('/imageList/:img', async function (req, res) {
 app.get('/imageData/:sort', async function (req, res) {
     const sort = req.params['sort'];
     const count = req.query['count'];
+    const order = req.query['order'];
     let sortedImages;
     let responseImages;
     sortedImages = await chooseSorting(sort);
     if (count !== null) {
         responseImages = await chooseAmount(sortedImages, count);
+        if (order === 'desc') {
+            responseImages.reverse();
+        }
         await writeResponse(responseImages);
     } else {
         responseImages = sortedImages;
+        if (order === 'desc') {
+            responseImages.reverse();
+        }
         await writeResponse(responseImages);
     }
 
