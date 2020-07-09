@@ -123,15 +123,14 @@ async function imageReader() {
     for (const filename of fileList) {
         let imgPath = path.join(__dirname, `../data/${filename}/original`);
         let file = await fs.open(imgPath, 'r');
-        let buffer = await fs.readFile(imgPath);
-        const palette = await splashy(buffer);
+        const palette = JSON.parse(await fs.readFile(path.join(__dirname, `../data/${filename}/colors.json`)));
         let stat = await file.stat();
         await file.close();
 
         data.push({
             birthtime: stat.birthtime,
             filename,
-            color: palette[0]
+            color: palette.hexcodes[0]
         });
     }
     return data
@@ -281,6 +280,13 @@ app.post('/', async function (req, res) {
     let id = shortid.generate();
     await fs.mkdir(path.join(__dirname, `../data/${id}`));
     let buffer = await convertImg(req.body);
+    const palette = await splashy(buffer);
+    const colors = {
+        image: id,
+        hexcodes: palette
+    };
+    const data = JSON.stringify(colors);
+    await fs.writeFile(path.join(__dirname, `../data/${id}/colors.json`), data);
     await fs.writeFile(path.join(__dirname, `../data/${id}/original`), buffer);
     res.end();
 
@@ -318,19 +324,8 @@ app.get('/image/:tag', async function (req, res) {
 app.get('/colors/:tag', async function (req, res) {
 
     const tag = req.params['tag'];
-    const originalPath = path.join(__dirname, `../data/${tag}/original`);
-    const buffer = await fs.readFile(originalPath);
-    const palette = await splashy(buffer);
-
-    const colors = {
-        image: tag,
-        hexcodes: palette
-    };
-
-    const data = JSON.stringify(colors);
-    await fs.writeFile(path.join(__dirname, `../data/${tag}/colors.json`), data);
-
-    res.send(palette);
+    const data = JSON.parse(await fs.readFile(path.join(__dirname, `../data/${tag}/colors.json`)));
+    res.send(data.hexcodes);
 });
 
 app.delete('/imageList', async function (req, res) {
