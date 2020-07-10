@@ -128,9 +128,11 @@ async function imageReader() {
         await file.close();
 
         data.push({
-            birthtime: stat.birthtime,
             filename,
-            color: palette.hexcodes[0]
+            path: imgPath,
+            birthtime: stat.birthtime.toString(),
+            colors: palette.hexcodes,
+            mainColor: palette.hexcodes[0]
         });
     }
     return data
@@ -148,7 +150,7 @@ async function chooseSorting(sort) {
         } else if (sort === 'random') {
             images = await imageReader();
         } else if (sort === 'colors') {
-            images = colorSort(await imageReader());
+            images = await colorSort(await imageReader());
         }
         return images;
     } catch (e) {
@@ -158,8 +160,7 @@ async function chooseSorting(sort) {
 
 function birthtimeSort(data) {
     return data
-        .sort((a, b) => a.birthtime - b.birthtime)
-        .map(v => v.filename);
+        .sort((a, b) => a.birthtime - b.birthtime);
 }
 
 function nameSort(data) {
