@@ -150,7 +150,7 @@ async function chooseSorting(sort) {
         } else if (sort === 'random') {
             images = await imageReader();
         } else if (sort === 'colors') {
-            images = await colorSort(await imageReader());
+            images = colorSort(await imageReader());
         }
         return images;
     } catch (e) {
@@ -174,18 +174,14 @@ function nameSort(data) {
 async function colorSort(data) {
     //color sorting algorithm by Shanfan Huang (https://jsfiddle.net/shanfan/ojgp5718/)
     const colorData = data.map(img => {
-        const color = img.color;
+        const color = img.mainColor;
         const obj = new Color(color);
         const hsvObj = constructColor(obj);
 
-        return {
-            filename: img.filename,
-            color: hsvObj
-        };
+        img.mainColor = hsvObj;
+        return img;
     });
     let sort = sortColorsByHue(colorData);
-    //TODO: sortierte Liste mit allen Infos zurückgeben
-
     return sort;
 }
 
