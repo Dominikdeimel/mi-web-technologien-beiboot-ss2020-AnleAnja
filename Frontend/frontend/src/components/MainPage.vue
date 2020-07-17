@@ -45,7 +45,7 @@ export default {
             const path = urlConfig.getUrl('imageList');
             axios
                 .get(path)
-                .then(res => (this.imageNames = res.data));
+                .then(res => (this.imageNames = res.data.map(el => el.filename)));
         },
     }
 };
