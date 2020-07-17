@@ -10,7 +10,7 @@ services:
         target: /app/data
 
   frontend:
-    build: ../Frontend/frontend
+    build: ..
     ports:
       - "8080:8080"
 volumes:
