@@ -6,7 +6,7 @@ import {Config} from "./Config";
 import * as express from "express";
 import * as cors from 'cors';
 import {promises as fs} from 'fs';
-import * as shortid from 'shortid';
+import * as shortId from 'shortid';
 import * as sharp from 'sharp';
 import * as path from 'path';
 import splashy = require("splashy");
@@ -31,15 +31,18 @@ class BackendApplication {
         });
     }
 
-    private async getSortedImageList(type: string): Promise<ImageMetadata[]> {
+    private static async getSortedImageList(type: string): Promise<ImageMetadata[]> {
         let sorter: ImageSorter | undefined = undefined;
         switch (type) {
             case "birthtime":
                 sorter = birthtime;
+                break;
             case "alphabetically":
                 sorter = name;
+                break;
             case "colors":
                 sorter = color;
+                break;
             case "random":
                 sorter = random;
         }
@@ -67,7 +70,7 @@ class BackendApplication {
                 res.sendStatus(415);
                 return;
             }
-            let id = shortid.generate();
+            let id = shortId.generate();
             await fs.mkdir(path.join(__dirname, `../data/${id}`));
             let buffer = await ImageStore.convertImg(req.body);
             const palette = await splashy(buffer);
@@ -82,7 +85,7 @@ class BackendApplication {
 
         });
 
-        this._app.get('/image/:tag', async function (req, res) {
+        this._app.get('/image/:tag', async (req, res) => {
 
             const tagParam = req.params['tag'];
             const sizeParam = req.query['size'];
@@ -146,9 +149,9 @@ class BackendApplication {
             const skip = req.query['skip'] !== undefined ? parseInt(req.query['skip'] as string) : 0;
             const order = req.query['order'] ?? 'asc';
 
-            let sortedImages = await this.getSortedImageList(sort as string);
+            let sortedImages = await BackendApplication.getSortedImageList(sort as string);
 
-            let responseImages = this.selectForPagination(sortedImages, count, skip);
+            let responseImages = BackendApplication.selectForPagination(sortedImages, count, skip);
 
             if (order === 'desc') responseImages.reverse();
 
@@ -159,18 +162,18 @@ class BackendApplication {
                 images: responseImages
             };
 
-            await this.storeResponse(response);
+            await BackendApplication.storeResponse(response);
 
             res.send(response);
         });
     }
 
-    private async storeResponse(images) {
+    private static async storeResponse(images) {
         const data = JSON.stringify(images);
         await fs.writeFile(path.join(__dirname, '../imageData.json'), data);
     }
 
-    private selectForPagination(source: ImageMetadata[], count: number, skip: number): ImageMetadata[] {
+    private static selectForPagination(source: ImageMetadata[], count: number, skip: number): ImageMetadata[] {
         return source.slice(skip, count);
     }
 }

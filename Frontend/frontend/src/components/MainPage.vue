@@ -45,7 +45,10 @@ export default {
             const path = urlConfig.getUrl('api/imageData?sort=birthtime');
             axios
                 .get(path)
-                .then(res => (this.imageNames = res.data.map(el => el.filename)));
+                .then(res => {
+                    console.dir(res);
+                    this.imageNames = res.data.images.map(el => el.filename);
+                });
         },
     }
 };
