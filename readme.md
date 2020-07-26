@@ -91,4 +91,4 @@ The following setup guide explains how to start the application without Docker
 
 * `cd src`
 
-* `node backend.js`
+* `node backend.ts`

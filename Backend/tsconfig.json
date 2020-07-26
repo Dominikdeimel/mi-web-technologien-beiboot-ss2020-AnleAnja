@@ -1,0 +1,11 @@
+{
+  "files": [
+    "src/backend.ts"
+  ],
+  "compilerOptions": {
+    "outDir": "dist/",
+    "allowJs": true,
+    "module": "CommonJS",
+    "moduleResolution": "Node"
+  }
+}

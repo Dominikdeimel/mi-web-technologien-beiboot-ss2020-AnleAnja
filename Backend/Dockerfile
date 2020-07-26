@@ -1,4 +1,4 @@
-FROM node:13-alpine
+FROM node:14-alpine
 
 WORKDIR app/
 
@@ -6,9 +6,11 @@ COPY package.json .
 RUN npm install
 
 COPY src/ src/
+RUN npm run build
+
 COPY config.json .
 VOLUME /app/data/
 
 EXPOSE 3000
 
-CMD ["node", "src/backend.js"]
+CMD ["node", "dist/backend.js"]

@@ -42,7 +42,7 @@ export default {
     methods: {
         loadImageNames() {
 
-            const path = urlConfig.getUrl('imageList');
+            const path = urlConfig.getUrl('api/imageData?sort=birthtime');
             axios
                 .get(path)
                 .then(res => (this.imageNames = res.data.map(el => el.filename)));
