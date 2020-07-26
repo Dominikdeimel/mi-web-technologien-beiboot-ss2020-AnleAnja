@@ -1,9 +1,13 @@
 version: '3.2'
 services:
-  backend:
-
   dev:
+    build:
+      context: ..
+      dockerfile: .docker/development/Dockerfile
     volumes:
       - type: bind
         source: ../
         target: /app
+      - type: bind
+        source: ./development/entrypoint.js
+        target: /app/entrypoint.js
