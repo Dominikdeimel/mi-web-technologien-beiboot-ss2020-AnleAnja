@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
-    "build": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel assets/js/main.js -o public/js/main.min.js",
     "lint": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -18,8 +18,13 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "typescript": "^3.9.7",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
     "@types/node": "^14.0.26",
-    "@types/sharp": "^0.25.1"
+    "@types/sharp": "^0.25.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-minify": "^0.5.1",
+    "typescript": "^3.9.7"
   }
 }

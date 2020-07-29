@@ -10,6 +10,7 @@ RUN npm install
 COPY . .
 
 RUN sass --quiet --style=compressed assets/scss/styles.scss:public/css/styles.min.css
+RUN npm run build
 
 EXPOSE 8080
 
