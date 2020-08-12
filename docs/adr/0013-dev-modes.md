@@ -10,25 +10,25 @@ The deployment is to be done via a Docker Container and includes the options of 
 
 ## Considered Options
 
-* Multiple docker compose files
+* Multiple docker-compose files
 * Environment variables
 
 ## Decision Outcome
 
-Chosen option: The multiple docker compose files, because the implementation and usage are easier.
+Chosen option: The multiple docker-compose files, because the implementation and usage are easier.
 
 ## Pros and Cons of the Options
 
 ### Multiple docker compose files
 
-* Good, because of previous experience with the docker compose files
+* Good, because of previous experience with the docker-compose files
 * Good, because it provides an easy solution to add more modes in the future
 * Good, because starting the modes is very easy
 
 ### Environment variables
 
 * Good, because everything is combined in one file
-* Bad, because there's no  prior experience with docker compose files
+* Bad, because there's no  prior experience with environment variables
 
 ## Links
 
