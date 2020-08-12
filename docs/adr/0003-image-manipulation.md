@@ -22,7 +22,7 @@ Uploaded images should be resized as well as scaled. The exact measurements are 
 
 ## Decision Outcome
 
-Chosen option: sharp and splashy, because these libraries fulfill all requirements given (see below).
+Chosen option: "sharp" and "splashy", because these libraries fulfill all requirements given (see below).
 
 ### Positive Consequences
 

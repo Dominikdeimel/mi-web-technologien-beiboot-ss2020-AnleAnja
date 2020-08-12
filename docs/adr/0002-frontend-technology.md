@@ -23,7 +23,7 @@ We have to specify frameworks for frontend development, in detail a JavaScript f
 
 ## Decision Outcome
 
-Chosen option: Vue.js with the design framework Vuetify.js, because these are the specified frameworks for the project "Cranach Timeline".
+Chosen option: "Vue.js" with the design framework "Vuetify.js", because these are the specified frameworks for the project "Cranach Timeline".
 
 ### Positive Consequences
 

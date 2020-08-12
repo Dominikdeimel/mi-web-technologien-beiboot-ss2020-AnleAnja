@@ -14,7 +14,7 @@ In order to refactor the backend code, a change to TypeScript has to be consider
 
 ## Decision Outcome
 
-Chosen option: TypeScript, because it simplifies the clarity and legibility of the code.
+Chosen option: "TypeScript", because it simplifies the clarity and legibility of the code.
 
 ### Positive Consequences
 

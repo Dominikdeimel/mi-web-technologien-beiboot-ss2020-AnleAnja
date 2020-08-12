@@ -15,7 +15,7 @@ The deployment is to be done via a Docker Container and includes the options of 
 
 ## Decision Outcome
 
-Chosen option: The multiple docker-compose files, because the implementation and usage are easier.
+Chosen option: The "multiple docker-compose files", because the implementation and usage are easier.
 
 ## Pros and Cons of the Options
 

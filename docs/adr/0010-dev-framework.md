@@ -15,7 +15,7 @@ A prebuilt NodeJS framework should be considered to help create the web applicat
 
 ## Decision Outcome
 
-Chosen option: ExpressJS, because it outweighs the other options in terms of consequences and was already used in the Beiboot backend.
+Chosen option: "ExpressJS", because it outweighs the other options in terms of consequences and was already used in the Beiboot backend.
 
 ### Positive Consequences
 

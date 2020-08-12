@@ -16,7 +16,7 @@ To maintain a high quality code, a linter should be added. A linter checks writt
 
 ## Decision Outcome
 
-Chosen option: ESLint, because it has almost only pros and has been used before.
+Chosen option: "ESLint", because it has almost only pros and has been used before.
 
 ### Positive Consequences
 

@@ -14,7 +14,7 @@ The module chosen in [ADR-0003](0003-image-manipulation.md) does not sort the co
 
 ## Decision Outcome
 
-Chosen option: node-vibrant, because it provides all the information needed and is easy to implement.
+Chosen option: "node-vibrant", because it provides all the information needed and is easy to implement.
 
 ### Positive Consequences
 

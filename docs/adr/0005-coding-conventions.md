@@ -14,13 +14,9 @@ Code conventions improve the readability of the software, allowing contributors 
 
 ## Decision Outcome
 
-Chosen option: a combination of JavaScript Standard Style and self written coding conventions. The JavaScript Standard 
+Chosen option: a combination of "JavaScript Standard Style" and self written coding conventions. The JavaScript Standard 
 Style conventions are used as a base and completed with self written elements. Furthermore, ESLint is implemented to 
 check the coding conventions.
-
-### Positive Consequences
-
-* T
 
 ## Pros and Cons of the Options
 

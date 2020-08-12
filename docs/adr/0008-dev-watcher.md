@@ -15,7 +15,7 @@ A watcher must be implemented to enable hot reloading.
 
 ## Decision Outcome
 
-Chosen option: supervisor, because it outweighs the other options in their consequences
+Chosen option: "supervisor", because it outweighs the other options in their consequences
 
 ### Positive Consequences
 

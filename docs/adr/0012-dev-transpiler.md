@@ -14,7 +14,7 @@ A transpiler is needed to convert JS code to a backward compatible version of JS
 
 ## Decision Outcome
 
-Chosen option: Babel, because it's an easy way to transpile and minify JavaScript code
+Chosen option: "Babel", because it's an easy way to transpile and minify JavaScript code
 
 ### Positive Consequences
 
