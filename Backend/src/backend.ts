@@ -11,7 +11,7 @@ import * as sharp from 'sharp';
 import * as path from 'path';
 import {imageSize} from 'image-size';
 import {ISizeCalculationResult} from 'image-size/dist/types/interface';
-import splashy = require("splashy");
+import vibrant = require("node-vibrant");
 
 type OrientationType = 'portrait' | 'landscape' | 'square';
 
@@ -42,10 +42,21 @@ class BackendApplication {
     }
 
     private static async getMetadata(buffer: Buffer, id: string): Promise<StoredImageMeta> {
-        const palette = await splashy(buffer);
+        const palette = await vibrant.from(path.join(__dirname, `../data/${id}/original`)).getSwatches();
+        let hexcodes = [];
+
+        for (let swatch in palette) {
+            hexcodes.push({
+                name: swatch,
+                color: palette[swatch].getHex(),
+                population: palette[swatch].getPopulation()
+            });
+        }
+        hexcodes.sort((a, b) => (b.population - a.population));
+
         const colors = {
             image: id,
-            hexcodes: palette
+            hexcodes: hexcodes.map(el => el.color)
         };
         const dimensions = imageSize(buffer);
         let mode;
@@ -112,13 +123,15 @@ class BackendApplication {
                 res.sendStatus(415);
                 return;
             }
-            let id = shortId.generate();
+            const id = shortId.generate();
             await fs.mkdir(path.join(__dirname, `../data/${id}`));
-            let buffer = await ImageStore.convertImg(req.body);
-            let response = await BackendApplication.getMetadata(buffer, id);
+            const buffer = await ImageStore.convertImg(req.body);
+
+            await fs.writeFile(path.join(__dirname, `../data/${id}/original`), buffer);
+
+            const response = await BackendApplication.getMetadata(buffer, id);
 
             await fs.writeFile(path.join(__dirname, `../data/${id}/metadata.json`), JSON.stringify(response));
-            await fs.writeFile(path.join(__dirname, `../data/${id}/original`), buffer);
             res.end();
 
         });
