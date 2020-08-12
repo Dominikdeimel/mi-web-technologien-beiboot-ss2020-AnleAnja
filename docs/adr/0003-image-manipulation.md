@@ -65,7 +65,7 @@ JavaScript Image Manipulation Program
 
 ### splashy
 
-* Good, because the input can be either an url or a buffer
+* Good, because the input can be either an url, or a buffer
 * Good, because the usage is short and simple
 
 ## Links
