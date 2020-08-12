@@ -19,8 +19,8 @@ export class ImageStore {
         for (const filename of fileList) {
             let imgPath = path.join(__dirname, `../data/${filename}/original`);
             let file = await fs.open(imgPath, 'r');
-            const fileContent = await fs.readFile(path.join(__dirname, `../data/${filename}/colors.json`), {encoding: 'utf8'});
-            const palette = JSON.parse(fileContent);
+            const fileContent = await fs.readFile(path.join(__dirname, `../data/${filename}/metadata.json`), {encoding: 'utf8'});
+            const content = JSON.parse(fileContent);
             let stat = await file.stat();
             await file.close();
 
@@ -28,8 +28,8 @@ export class ImageStore {
                 filename,
                 path: imgPath,
                 birthtime: stat.birthtime,
-                colors: palette.hexcodes,
-                mainColor: palette.hexcodes[0]
+                colors: content.hexcodes,
+                mainColor: content.hexcodes[0]
             });
         }
 
@@ -120,6 +120,5 @@ export class ImageStore {
 
         return tmp;
     }
-
 
 }

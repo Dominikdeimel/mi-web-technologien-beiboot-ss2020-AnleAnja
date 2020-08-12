@@ -1,15 +1,25 @@
 import {ImageStore} from "./ImageStore";
 import {ImageMetadata} from "./ImageMetadata";
 import {birthtime, color, ImageSorter, name, random} from "./ImageSorter";
+import * as express from "express";
 import {Express} from "express";
 import {Config} from "./Config";
-import * as express from "express";
 import * as cors from 'cors';
 import {promises as fs} from 'fs';
 import * as shortId from 'shortid';
 import * as sharp from 'sharp';
 import * as path from 'path';
+import {imageSize} from 'image-size';
+import {ISizeCalculationResult} from 'image-size/dist/types/interface';
 import splashy = require("splashy");
+
+type OrientationType = 'portrait' | 'landscape' | 'square';
+
+interface StoredImageMeta extends ISizeCalculationResult
+{
+    image: string;
+    hexcodes: string[];
+}
 
 class BackendApplication {
 
@@ -31,6 +41,24 @@ class BackendApplication {
         });
     }
 
+    private static async getMetadata(buffer: Buffer, id: string): Promise<StoredImageMeta> {
+        const palette = await splashy(buffer);
+        const colors = {
+            image: id,
+            hexcodes: palette
+        };
+        const dimensions = imageSize(buffer);
+        let mode;
+        if (dimensions.height > dimensions.width) {
+            mode = 'portrait';
+        } else if (dimensions.height < dimensions.width) {
+            mode = 'landscape';
+        } else mode = 'square';
+        dimensions['mode'] = mode;
+
+        return Object.assign({}, colors, dimensions);
+    }
+
     private static async getSortedImageList(type: string): Promise<ImageMetadata[]> {
         let sorter: ImageSorter | undefined = undefined;
         switch (type) {
@@ -47,6 +75,20 @@ class BackendApplication {
                 sorter = random;
         }
         return ImageStore.listImages(sorter)
+    }
+
+    private static async getListInMode(mode: string) {
+        const directory = await fs.readdir(path.join(__dirname, '../data'));
+        let list = [];
+
+        for (let i = 0; i < directory.length; i++) {
+            // @ts-ignore
+            const imageData = JSON.parse(await fs.readFile(path.join(__dirname, `../data/${directory[i]}/metadata.json`)));
+            if(imageData.mode === mode){
+                list.push(imageData);
+            }
+        }
+        return list;
     }
 
     private initializeServer(): void {
@@ -73,13 +115,9 @@ class BackendApplication {
             let id = shortId.generate();
             await fs.mkdir(path.join(__dirname, `../data/${id}`));
             let buffer = await ImageStore.convertImg(req.body);
-            const palette = await splashy(buffer);
-            const colors = {
-                image: id,
-                hexcodes: palette
-            };
-            const data = JSON.stringify(colors);
-            await fs.writeFile(path.join(__dirname, `../data/${id}/colors.json`), data);
+            let response = await BackendApplication.getMetadata(buffer, id);
+
+            await fs.writeFile(path.join(__dirname, `../data/${id}/metadata.json`), JSON.stringify(response));
             await fs.writeFile(path.join(__dirname, `../data/${id}/original`), buffer);
             res.end();
 
@@ -112,7 +150,7 @@ class BackendApplication {
 
         this._app.get('/colors/:tag', async function (req, res) {
             const tag = req.params['tag'];
-            const data = JSON.parse(await fs.readFile(path.join(__dirname, `../data/${tag}/colors.json`), {encoding: 'utf8'}));
+            const data = JSON.parse(await fs.readFile(path.join(__dirname, `../data/${tag}/metadata.json`), {encoding: 'utf8'}));
             res.send(data.hexcodes);
         });
 
@@ -165,6 +203,15 @@ class BackendApplication {
             await BackendApplication.storeResponse(response);
 
             res.send(response);
+        });
+
+        this._app.get('/random', async (req, res) => {
+            const mode = req.query['mode'] ?? 'landscape';
+            const listInMode = await BackendApplication.getListInMode(mode as string);
+            const result = listInMode[Math.floor(Math.random() * listInMode.length)];
+
+            res.send(result);
+
         });
     }
 
