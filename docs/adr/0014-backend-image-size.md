@@ -1,72 +1,39 @@
-# [short title of solved problem and solution]
+# image-size as library to get size of image
 
-* Status: [proposed | rejected | accepted | deprecated | … | superseded by [ADR-0005](0005-example.md)] <!-- optional -->
-* Deciders: [list everyone involved in the decision] <!-- optional -->
-* Date: [YYYY-MM-DD when the decision was last updated] <!-- optional -->
-
-Technical Story: [description | ticket/issue URL] <!-- optional -->
+* Status: accepted
+* Date: 2020-08-12
 
 ## Context and Problem Statement
 
-[Describe the context and problem statement, e.g., in free form using two to three sentences. You may want to articulate the problem in form of a question.]
-
-## Decision Drivers <!-- optional -->
-
-* [driver 1, e.g., a force, facing concern, …]
-* [driver 2, e.g., a force, facing concern, …]
-* … <!-- numbers of drivers can vary -->
+To add the current format of an image (portrait, landscape or square) the width and height must be extracted.
 
 ## Considered Options
 
-* [option 1]
-* [option 2]
-* [option 3]
-* … <!-- numbers of options can vary -->
+* image-size
+* buffer-image-size
 
 ## Decision Outcome
 
-Chosen option: "[option 1]", because [justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force force | … | comes out best (see below)].
+Chosen option: "image-size", because it's easy to use and well documented.
 
 ### Positive Consequences <!-- optional -->
 
-* [e.g., improvement of quality attribute satisfaction, follow-up decisions required, …]
-* …
+* easy implementation
 
-### Negative Consequences <!-- optional -->
+## Pros and Cons of the Options
 
-* [e.g., compromising quality attribute, follow-up decisions required, …]
-* …
+### image-size
 
-## Pros and Cons of the Options <!-- optional -->
+* Good, because it's easy to use
+* Good, because it provides all the functionalities needed
 
-### [option 1]
+### buffer-image-size
 
-[example | description | pointer to more information | …] <!-- optional -->
+* Good, because it's specifically for buffers
+* Good, because it's a fork of "image-size"
+* Bad, because it doesn't support all features from image-size
 
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
+## Links
 
-### [option 2]
-
-[example | description | pointer to more information | …] <!-- optional -->
-
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
-
-### [option 3]
-
-[example | description | pointer to more information | …] <!-- optional -->
-
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
-
-## Links <!-- optional -->
-
-* [Link type] [Link to ADR] <!-- example: Refined by [ADR-0005](0005-example.md) -->
-* … <!-- numbers of links can vary -->
+* [image-size](https://github.com/image-size/image-size)
+* [buffer-image-size](https://www.npmjs.com/package/buffer-image-size)
