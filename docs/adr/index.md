@@ -16,6 +16,8 @@ This log lists the architectural decisions for **mi-web-technologien-beiboot-ss2
 - [ADR-0011](0011-dev-linter.md) - ESLint as Linter
 - [ADR-0012](0012-dev-transpiler.md) - Babel for JS transpiling
 - [ADR-0013](0013-dev-modes.md) - Multiple docker-compose files for different modes
+- [ADR-0014](0014-backend-image-size.md) - image-size as library to get size of image
+- [ADR-0015](0015-backend-primary-colors.md) - node-vibrant as library for extracting colors
 
 For new ADRs, please use [template.md](template.md) as basis.
 More information on MADR is available at <https://adr.github.io/madr/>.
