@@ -2,6 +2,8 @@
 
 With "dev" a decoupled, development-ready docker container for frontend development is provided for a frontend development team.
 
+![Dev](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-AnleAnja/blob/master/.github/images/dev.PNG)
+
 There is a stand-alone docker container that runs Node.js. It can access the REST API of the project via http. A BuildChain with SASS Pipeline, Linter, Transpiler and Minification is implemented. Furthermore there is Hot Reload, a reasonable, state-of-the-art folder structure and a WebServer for the frontend code.
 
 ## Development Mode
