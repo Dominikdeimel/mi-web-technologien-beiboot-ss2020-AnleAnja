@@ -196,11 +196,12 @@ class BackendApplication {
 
         this._app.get('/api/imageData', async (req, res) => {
             const sort = req.query['sort'] ?? 'random';
-            const count = req.query['count'] !== undefined ? parseInt(req.query['count'] as string) : 20;
             const skip = req.query['skip'] !== undefined ? parseInt(req.query['skip'] as string) : 0;
             const order = req.query['order'] ?? 'asc';
 
             let sortedImages = await BackendApplication.getSortedImageList(sort as string);
+            
+            const count = req.query['count'] !== undefined ? parseInt(req.query['count'] as string) : sortedImages.length;
 
             let responseImages = BackendApplication.selectForPagination(sortedImages, count, skip);
 
