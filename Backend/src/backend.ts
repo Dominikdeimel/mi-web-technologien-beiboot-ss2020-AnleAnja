@@ -200,7 +200,7 @@ class BackendApplication {
             const order = req.query['order'] ?? 'asc';
 
             let sortedImages = await BackendApplication.getSortedImageList(sort as string);
-            
+
             const count = req.query['count'] !== undefined ? parseInt(req.query['count'] as string) : sortedImages.length;
 
             let responseImages = BackendApplication.selectForPagination(sortedImages, count, skip);
@@ -211,6 +211,7 @@ class BackendApplication {
                 sort: sort,
                 order: order,
                 count: count,
+                skip: skip,
                 images: responseImages
             };
 
