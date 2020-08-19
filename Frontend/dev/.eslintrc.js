@@ -34,6 +34,9 @@ module.exports = {
         ],
         'no-fallthrough': [
             'off'
-        ]
+        ],
+        'no-undef': [
+            'off'
+            ]
     }
 };

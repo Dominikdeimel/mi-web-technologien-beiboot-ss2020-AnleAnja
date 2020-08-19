@@ -4,7 +4,7 @@ WORKDIR app/
 
 RUN npm install supervisor sass -g
 
-COPY package.json .
+COPY package.json ./
 RUN npm install
 
 EXPOSE 8080
