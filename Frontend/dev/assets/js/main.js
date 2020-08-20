@@ -1,12 +1,8 @@
 $(document).ready( function(){
     $('button').bind('click', function(){
-        console.log(loadImageData());
-        $('.i1').attr('src', 'https://www.w3schools.com/w3css/img_snowtops.jpg');
+        $.get( 'http://localhost:3000/random', function( data ) {
+            console.log(data);
+            $('.i1').attr('src', `http://localhost:3000/image/${data.image}`);
+        });
     });
 });
-
-function loadImageData(){
-    $.get( 'http://localhost:3000/random', function( data ) {
-        return data;
-    });
-}
