@@ -3,23 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Hello World</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/css/styles.min.css" />
 </head>
 <body>
-<script src="/js/main.min.js"></script>
-<div>
-   <button id="button">Bitte ein Bild!</button>
-    <img class="i1" src="" alt="">
+<script src="/js/main.js"></script>
+<div id="mainPage">
+   <button onclick="main()">Bitte ein Bild!</button>
+    <div class="container div-text">
+        <div id="gradient" style="width: 500px; height: 250px;"></div>
+        <img id="i1" src="" alt="" style="width: 500px; height: 500px;">
+
+        <div class="centered text" id="quote" style="width: 500px; height: 50px;"></div>
+
+    </div>
 </div>
 </body>
 
 
 <style>
-    div {
+    .container {
+        position: relative;
+        margin: 0 auto;
+        text-align: center;
+        color: white;
+    }
+    .centered {
         position: absolute;
-        top: 50%;
+        bottom: 30px;
         left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0 auto;
+    }
+    .div-text {
+        font-size: 30px;
+        overflow-wrap: break-word;
+    }
+    .gradient {
+        position: absolute;
+        bottom: -120px;
+        height: 250px;
+        left: 50%;
+        z-index: 1;
+        transform: translate(-50%, -50%);
+        background-image: linear-gradient(to bottom, rgba(151,255,255,0), rgba(151,255,255,1));
+    }
+    .text {
+        z-index: 3;
     }
 </style>
 </html>
