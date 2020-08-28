@@ -42,6 +42,7 @@ class BackendApplication {
     }
 
     private static async getMetadata(buffer: Buffer, id: string): Promise<StoredImageMeta> {
+        const imagePath = path.join(__dirname, `../data/${id}/original`);
         const palette = await vibrant.from(path.join(__dirname, `../data/${id}/original`)).getSwatches();
         let hexcodes = [];
 
@@ -49,14 +50,17 @@ class BackendApplication {
             hexcodes.push({
                 name: swatch,
                 color: palette[swatch].getHex(),
-                population: palette[swatch].getPopulation()
+                population: palette[swatch].getPopulation(),
+                rgb: palette[swatch].getRgb(),
+                hsl: palette[swatch].getHsl()
             });
         }
         hexcodes.sort((a, b) => (b.population - a.population));
 
         const colors = {
             image: id,
-            hexcodes: hexcodes.map(el => el.color)
+            path: `http://localhost:3000/image/${id}`,
+            hexcodes: hexcodes
         };
         const dimensions = imageSize(buffer);
         let mode;
