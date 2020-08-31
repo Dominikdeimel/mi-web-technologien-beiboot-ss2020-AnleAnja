@@ -1,0 +1,10 @@
+version: '3.2'
+services:
+  backend:
+    restart: always
+
+  dev:
+    build:
+      context: ..
+      dockerfile: .docker/production/Dockerfile
+    restart: always

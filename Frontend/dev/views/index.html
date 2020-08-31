@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Deep Quote Image Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#764ABC"/>
+    <link rel="apple-touch-icon" href="/images/apple-touch.png">
+    <link rel="manifest" href="/js/pwa.webmanifest">
+    <link rel="stylesheet" href="/css/styles.min.css" />
+</head>
+<body>
+<script src="/js/main.js"></script>
+<script src="/js/status.js"></script>
+<div id="mainPage">
+    <span><b class="page-status">Online</b></span>
+    <div class="container div-text">
+        <canvas id="myCanvas" width="400" height="800" style="border:0 solid #000000;"></canvas>
+    </div>
+</div>
+</body>
+
+
+<style>
+    .container {
+        position: relative;
+        margin: 0 auto;
+        text-align: center;
+        color: white;
+    }
+    .centered {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0 auto;
+    }
+    .div-text {
+        font-size: 30px;
+        overflow-wrap: break-word;
+    }
+</style>
+</html>
