@@ -60,15 +60,114 @@ function drawGradient(primaryImageColor){
  */
 function drawQuote(primaryColorLuma, quote){
     const ctx = canvas.getContext('2d');
+    let fontSize = 30;
+    const formattedQuote = formatUsingLinebreaks(quote.text, fontSize);
     const fontColor = primaryColorLuma < 0.5 ? '#ffffff' : '#000000';
-    ctx.font = `30px ${fontFamily}`;
-    ctx.fillStyle = fontColor;
-    ctx.fillText(quote.text, 10, 600, 380);
-    ctx.font = `23px ${fontFamily}`;
-    ctx.fillText(`${quote.author} - ${quote.date}`, 50, 700, 380);
+
+    let lines = [];
+    let width = [];
+    for (let i = 0; i < formattedQuote.length; i++) {
+        const dimensions = calculateTextDimensions(formattedQuote[i], fontSize);
+        lines.push(dimensions);
+    }
+    for (let i = 0; i < lines.length; i++) {
+        width.push(lines[i].width);
+    }
+    const excess = Math.max(...width) + 40;
+    if (excess > canvas.width) {
+        const factor = excess / canvas.width;
+        fontSize = fontSize / factor;
+        for(let i = 0; i < lines.length; i++) {
+            lines[i].height = lines[i].height / factor;
+        }
+    }
+    renderMultilineString(lines, canvas.width / 2, 3 * canvas.height / 4, fontColor, fontSize);
 }
 
+/**
+ *
+ * @param { StringWithDimensions[] } lines
+ * @param { Number } x
+ * @param { Number } y
+ * @param { String } textColor
+ * @param { Number } fontSize
+ */
+function renderMultilineString(lines, x, y, textColor, fontSize) {
+    const ctx = canvas.getContext('2d');
+    ctx.textAlign = 'center';
+    ctx.fillStyle = textColor;
+    ctx.font = `${fontSize}pt ${fontFamily}`;
+    for (let i = 0; i < lines.length; i++) {
+        ctx.fillText(lines[i].content, x, y);
+        y += lines[i].height + 5;
+    }
+}
 
+/**
+ * @param { String } text
+ * @param { Number } fontSize
+ * @returns { StringWithDimensions }
+ */
+function calculateTextDimensions(text, fontSize) {
+    const span = document.createElement('span');
+    span.innerText = text;
+    span.style.font = `${fontSize}pt ${fontFamily}`;
+    span.style.whiteSpace = 'nowrap';
+    document.body.append(span);
+    const dimensions = span.getBoundingClientRect();
+    document.body.removeChild(span);
+    return {content: text, width: dimensions.width, height: dimensions.height};
+}
+
+/**
+ *
+ * @param { String } quote
+ * @param { Number } fontSize
+ * @returns { String[] }
+ */
+function formatUsingLinebreaks(quote, fontSize) {
+    const ctx = canvas.getContext('2d');
+    const maxLineBreaks = 2;
+    const lines = [];
+    ctx.font = `${fontSize}pt ${fontFamily}`;
+    const textWidth = ctx.measureText(quote);
+
+    for (let lineBreak = maxLineBreaks; lineBreak > 0; lineBreak--) {
+        // check if the current amount of linebreaks is justified
+        if (textWidth.width >= canvas.width * lineBreak) {
+            // get how many characters are supposed to be in a line
+            const charCount = quote.length / (lineBreak + 1);
+            let lastIndex = 0;
+            for (let i = 0; i < lineBreak; i++) {
+                // for each target linebreak, replace the closest space with a linebreak
+                const spaceIndex = findClosestSpace(quote, charCount * (i + 1));
+                lines.push(quote.substring(lastIndex, spaceIndex));
+                lastIndex = spaceIndex + 1;
+            }
+            lines.push(quote.substring(lastIndex));
+            // end of function, the quite has been partitioned
+            return lines;
+        }
+    }
+
+    // if the quote needed no change, it is returned as-is
+    return [quote];
+}
+/**
+ *
+ * @param { String } text
+ * @param { Number } position
+ * @returns { Number }
+ * */
+function findClosestSpace(text, position) {
+    const right = text.indexOf(' ', position);
+    const left = text.lastIndexOf(' ', position);
+    if (left === -1 || right - position < position - left) {
+        return right;
+    } else {
+        return left;
+    }
+}
 /**
  * returns {Object}
  */
@@ -87,7 +186,7 @@ async function loadQuote(){
     const response = await fetch(request);
     if(response.status !== 200){
         return {
-            text: 'Ideale sind wie Koks, ein Teil bleibt immer am Geldschein kleben',
+            text: 'Ideale sind wie Koks, ein Teil bleibt immer am Geldschein kleben Ideale sind wie Koks, ein Teil bleibt immer am Geldschein kleben Ideale sind wie Koks, ein Teil bleibt immer am Geldschein kleben',
             author: 'Dominik Deimel',
             date: 2089
         };
@@ -114,3 +213,10 @@ function initializeServiceWorker() {
             });
     }
 }
+
+/**
+ * @typedef {Object} StringWithDimensions
+ * @property {String} content
+ * @property {Number} width
+ * @property {Number} height
+ */
