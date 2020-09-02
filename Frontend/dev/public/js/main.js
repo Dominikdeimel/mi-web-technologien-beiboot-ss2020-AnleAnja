@@ -9,7 +9,7 @@ const fontFamily = 'Barlow';
  * @returns {Promise<void>}
  */
 async function setup(){
-    initialiseServiceWorker();
+    initializeServiceWorker();
     if(navigator.onLine){
         await drawContent();
     } else {
@@ -104,7 +104,7 @@ async function loadQuote(){
 /**
  * @returns {void}
  */
-function initialiseServiceWorker() {
+function initializeServiceWorker() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js')
             .then((reg) => {

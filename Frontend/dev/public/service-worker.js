@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sw-cache-example';
+const CACHE_NAME = 'DQIG_CACHE';
 const toCache = [
     '/',
     '/js/status.js',
