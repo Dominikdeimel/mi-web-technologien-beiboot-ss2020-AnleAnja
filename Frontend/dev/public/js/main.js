@@ -20,24 +20,27 @@ function setup() {
 /**
  * @returns {void}
  */
-function drawContent() {
+async function drawContent() {
     canvas = document.getElementById('myCanvas');
-    const image = new Image;
     const ctx = canvas.getContext('2d');
 
-    loadImageData()
-        .then(imageData => {
-            loadQuote()
-                .then(quote => {
-                    image.src = `${backendUrl}/image/${imageData.image}`;
-                    image.onload = function () {
-                        ctx.drawImage(image, 0, 0);
+    const imageData = await loadImageData();
+    const quote = await loadQuote();
+    const imagePromise = new Promise((resolve) => {
+        const image = new Image();
+        image.src = `${backendUrl}/image/${imageData.image}`;
+        image.onload = () => {
+            resolve(image);
+        };
+    });
+    const image = await imagePromise;
+    let scale = image.height < canvas.height ? canvas.height / image.height : image.width < canvas.width ? canvas.width / image.width : 1;
 
-                        drawGradient(imageData.hexcodes[0].color);
-                        drawQuote(imageData.hexcodes[0].hsl[2], quote);
-                    };
-                });
-        });
+    ctx.drawImage(image, 0, 0, image.width * scale, image.height * scale);
+
+    drawGradient(imageData.hexcodes[0].color);
+    drawQuote(imageData.hexcodes[0].hsl[2], quote);
+
 }
 
 /**
@@ -210,7 +213,7 @@ async function loadQuote() {
 /**
  * @returns {void}
  */
-function renderOfflineImage(){
+function renderOfflineImage() {
     canvas = document.getElementById('myCanvas');
     const image = new Image;
     const ctx = canvas.getContext('2d');
@@ -220,6 +223,7 @@ function renderOfflineImage(){
         ctx.drawImage(image, 0, 0);
     };
 }
+
 /**
  * @returns {void}
  */
