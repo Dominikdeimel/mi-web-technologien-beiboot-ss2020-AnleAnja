@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
-    "build": "echo \"Error: no test specified\" && exit 1",
-    "lint": "echo \"Error: no test specified\" && exit 1"
+    "lint": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "production": "webpack -p"
   },
   "author": "",
   "license": "ISC",
@@ -15,15 +16,22 @@
     "axios": "^0.19.2",
     "cors": "^2.8.5",
     "eslint": "^7.4.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.10.5",
-    "@babel/preset-env": "^7.10.4",
-    "@types/node": "^14.0.26",
-    "@types/sharp": "^0.25.1",
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "babel-loader": "^8.1.0",
     "babel-preset-minify": "^0.5.1",
-    "typescript": "^3.9.7"
+    "typescript": "^3.9.7",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "minify"
+    ]
   }
 }
