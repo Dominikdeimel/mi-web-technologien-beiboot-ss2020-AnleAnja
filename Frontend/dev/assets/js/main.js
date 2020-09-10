@@ -3,7 +3,7 @@ import regeneratorRuntime from 'regenerator-runtime';
 document.addEventListener('DOMContentLoaded', setup, false);
 
 let canvas;
-const backendUrl = 'http://192.168.178.20:3000';
+const backendUrl = 'http://192.168.178.50:3000';
 const quoteApiUrl = 'http://quotes.rest/qod';
 const fontFamily = 'Barlow';
 
