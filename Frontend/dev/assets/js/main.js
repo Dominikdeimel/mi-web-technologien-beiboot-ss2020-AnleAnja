@@ -199,20 +199,22 @@ async function loadQuote() {
     const request = new Request(quoteApiUrl);
     request.headers.append('Accept', 'application/json');
     const response = await fetch(request);
-    if (response.status !== 200) {
-        return {
-            text: 'Wer anderen eine Grube gräbt, hat selbst ein Bratwurst Bratgerät',
-            author: 'Dominik Deimel',
-            date: '2077-1-1'
-        };
-    } else {
+    if (response.status === 200 ) {
         const body = await response.json();
-        return {
-            text: body.contents.quotes[0].quote,
-            author: body.contents.quotes[0].author,
-            date: body.contents.quotes[0].date
-        };
+        if(body.contents.quotes[0].quote.length <= 200){
+            console.log(body.contents.quotes[0].quote.length);
+            return {
+                text: body.contents.quotes[0].quote,
+                author: body.contents.quotes[0].author,
+                date: body.contents.quotes[0].date
+            };
+        }
     }
+    return {
+        text: 'Wer anderen eine Grube gräbt, hat selbst ein Bratwurst Bratgerät',
+        author: 'Dominik Deimel',
+        date: '2077-1-1'
+    };
 }
 
 /**
