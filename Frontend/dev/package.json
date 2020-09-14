@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
-    "lint": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack --watch",
+    "watch": "webpack --watch --mode=development",
     "production": "webpack -p"
   },
   "author": "",
@@ -31,7 +29,12 @@
   "babel": {
     "presets": [
       "@babel/preset-env",
-      "minify"
+      [
+        "minify",
+        {
+          "builtIns": false
+        }
+      ]
     ]
   }
 }
