@@ -10,7 +10,7 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['*', '.js']
+        extensions: ['.js']
     },
     output: {
         path: __dirname + '/public/js',
