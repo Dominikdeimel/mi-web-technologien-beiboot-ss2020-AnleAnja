@@ -2,7 +2,7 @@ import regeneratorRuntime from 'regenerator-runtime';
 
 document.addEventListener('DOMContentLoaded', setup, false);
 
-let canvas;
+let canvas, imageData, quote;
 const backendUrl = 'http://192.168.178.50:3000';
 const quoteApiUrl = 'http://quotes.rest/qod';
 const fontFamily = 'Barlow';
@@ -10,10 +10,13 @@ const fontFamily = 'Barlow';
 /**
  * @returns {Promise<void>}
  */
-function setup() {
+async function setup() {
     initializeServiceWorker();
     if (navigator.onLine) {
+        imageData = await loadImageData();
+        quote = await loadQuote();
         drawContent();
+        setupColorPicker();
     } else {
         renderOfflineImage();
     }
@@ -22,12 +25,25 @@ function setup() {
 /**
  * @returns {void}
  */
-async function drawContent() {
+function setupColorPicker(){
+    for(let i = 0; i < 6; i++){
+        const colorButton = document.getElementById(`btn-${i}`);
+        colorButton.style.backgroundColor = imageData.hexcodes[i].color;
+        colorButton.addEventListener('click', () => {
+            drawContent(imageData.hexcodes[i]); 
+        });
+    }
+}
+
+/**
+ * @returns {void}
+ * @param {ColorObject} imageColors_Param
+ */
+async function drawContent(imageColors_Param) {
     canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
+    const gradientColor = imageColors_Param || imageData.hexcodes[0];
 
-    const imageData = await loadImageData();
-    const quote = await loadQuote();
     const imagePromise = new Promise((resolve) => {
         const image = new Image();
         image.src = `${backendUrl}/image/${imageData.image}`;
@@ -40,9 +56,8 @@ async function drawContent() {
 
     ctx.drawImage(image, 0, 0, image.width * scale, image.height * scale);
 
-    drawGradient(imageData.hexcodes[0].color);
-    drawQuote(imageData.hexcodes[0].hsl[2], quote);
-
+    drawGradient(gradientColor.color);
+    drawQuote(gradientColor.hsl[2], quote);
 }
 
 /**
@@ -56,7 +71,7 @@ function drawGradient(primaryImageColor) {
     grd.addColorStop(0, primaryImageColor);
     grd.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = grd;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height);
 }
 
 /**
@@ -257,4 +272,13 @@ function initializeServiceWorker() {
  * @property {String} text
  * @property {String} author
  * @property {String} date
+ */
+
+/**
+ * @typedef {Object} ColorObject
+ * @property {String} name
+ * @property {String} color
+ * @property {Number} population
+ * @property {Array} rgb
+ * @property {Array} hsl
  */
