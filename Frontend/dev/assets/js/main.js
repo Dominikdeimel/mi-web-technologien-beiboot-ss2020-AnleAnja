@@ -2,7 +2,7 @@ import regeneratorRuntime from 'regenerator-runtime';
 
 document.addEventListener('DOMContentLoaded', setup, false);
 
-let canvas, imageData, quote;
+let canvas;
 const backendUrl = 'http://192.168.178.50:3000';
 const quoteApiUrl = 'http://quotes.rest/qod';
 const fontFamily = 'Barlow';
@@ -10,13 +10,10 @@ const fontFamily = 'Barlow';
 /**
  * @returns {Promise<void>}
  */
-async function setup() {
+function setup() {
     initializeServiceWorker();
     if (navigator.onLine) {
-        imageData = await loadImageData();
-        quote = await loadQuote();
         drawContent();
-        setupColorPicker();
     } else {
         renderOfflineImage();
     }
@@ -25,25 +22,13 @@ async function setup() {
 /**
  * @returns {void}
  */
-function setupColorPicker(){
-    for(let i = 0; i < 6; i++){
-        const colorButton = document.getElementById(`btn-${i}`);
-        colorButton.style.backgroundColor = imageData.hexcodes[i].color;
-        colorButton.addEventListener('click', () => {
-            drawContent(imageData.hexcodes[i]); 
-        });
-    }
-}
-
-/**
- * @returns {void}
- * @param {ColorObject} imageColors_Param
- */
-async function drawContent(imageColors_Param) {
+async function drawContent() {
     canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
-    const gradientColor = imageColors_Param || imageData.hexcodes[0];
 
+    const imageData = await loadImageData();
+    const quote = await loadQuote();
+    const gradientColor = pickGradientColor(imageData.hexcodes);
     const imagePromise = new Promise((resolve) => {
         const image = new Image();
         image.src = `${backendUrl}/image/${imageData.image}`;
@@ -56,8 +41,32 @@ async function drawContent(imageColors_Param) {
 
     ctx.drawImage(image, 0, 0, image.width * scale, image.height * scale);
 
-    drawGradient(gradientColor.color);
+    drawGradient(gradientColor);
     drawQuote(gradientColor.hsl[2], quote);
+    console.log(imageData);
+    console.log(gradientColor);
+
+}
+
+function pickGradientColor(hexcodes){
+    let result = '';
+    let difference = 0;
+
+    for(let i = 1; i < hexcodes.length; i++){
+        let currentDifference = 0;
+        if(hexcodes[0].hsl[2] < hexcodes[i].hsl[2]){
+            currentDifference = hexcodes[i].hsl[2] - hexcodes[0].hsl[2];
+        } else {
+            currentDifference = hexcodes[0].hsl[2] - hexcodes[i].hsl[2];
+        }
+
+        if(difference < currentDifference){
+            difference = currentDifference;
+            result = hexcodes[i];
+        }
+    }
+
+    return result;
 }
 
 /**
@@ -68,10 +77,10 @@ function drawGradient(primaryImageColor) {
     const ctx = canvas.getContext('2d');
     const grd = ctx.createLinearGradient(0, canvas.height, 0, canvas.height / 2);
 
-    grd.addColorStop(0, primaryImageColor);
-    grd.addColorStop(1, 'rgba(0,0,0,0)');
+    grd.addColorStop(0, primaryImageColor.color);
+    grd.addColorStop(1, `rgba(${primaryImageColor.rgb[0]},${primaryImageColor.rgb[1]},${primaryImageColor.rgb[2]},0)`);
     ctx.fillStyle = grd;
-    ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 /**
@@ -216,7 +225,7 @@ async function loadQuote() {
     const response = await fetch(request);
     if (response.status === 200 ) {
         const body = await response.json();
-        if(body.contents.quotes[0].quote.length <= 200){
+        if(body.contents.quotes[0].quote.length <= 150){
             console.log(body.contents.quotes[0].quote.length);
             return {
                 text: body.contents.quotes[0].quote,
@@ -272,13 +281,4 @@ function initializeServiceWorker() {
  * @property {String} text
  * @property {String} author
  * @property {String} date
- */
-
-/**
- * @typedef {Object} ColorObject
- * @property {String} name
- * @property {String} color
- * @property {Number} population
- * @property {Array} rgb
- * @property {Array} hsl
  */
