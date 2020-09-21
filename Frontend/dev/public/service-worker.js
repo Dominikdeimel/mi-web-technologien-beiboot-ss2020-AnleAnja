@@ -1,7 +1,6 @@
 const CACHE_NAME = 'DQIG_CACHE';
 const toCache = [
     '/',
-    '/js/status.js',
     '/js/main.js',
     '/js/pwa.webmanifest'
 ];

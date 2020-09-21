@@ -1,8 +1,9 @@
 import regeneratorRuntime from 'regenerator-runtime';
 
 document.addEventListener('DOMContentLoaded', setup, false);
+window.addEventListener('resize', () => resizeWindows().catch(console.error));
 
-let canvas;
+let canvas, currentWindowMode, landscapeImageData, portraitImageData, currentImageData;
 const backendUrl = 'http://192.168.178.50:3000';
 const quoteApiUrl = 'http://quotes.rest/qod';
 const fontFamily = 'Barlow';
@@ -12,12 +13,54 @@ const fontFamily = 'Barlow';
  */
 function setup() {
     initializeServiceWorker();
+    setWindowMode();
+    setCanvasSize();
     if (navigator.onLine) {
-        drawContent();
+        loadImageData()
+            .then(() => {
+                setCurrentImageData();
+                drawContent();
+            });
+       
     } else {
         renderOfflineImage();
     }
 }
+
+function setWindowMode() {
+    if(window.innerHeight >= window.innerWidth){
+        currentWindowMode = 'portrait';
+    } else {
+        currentWindowMode = 'landscape';
+    }
+}
+
+function setCurrentImageData(){
+    if(currentWindowMode === 'portrait') {
+        currentImageData = portraitImageData;
+    } else {
+        currentImageData = landscapeImageData;
+    }
+}
+
+function setCanvasSize(){
+    canvas = document.getElementById('myCanvas');
+    if(currentWindowMode === 'portrait') {
+        canvas.height = window.innerHeight / 1.1;
+        canvas.width = canvas.height / 2;
+    } else {
+        canvas.width = window.innerWidth / 1.1;
+        canvas.height = canvas.width / 2;
+    }
+}
+
+async function resizeWindows() {
+    setWindowMode();
+    setCanvasSize();
+    setCurrentImageData();
+    await drawContent();
+}
+
 
 /**
  * @returns {void}
@@ -25,13 +68,13 @@ function setup() {
 async function drawContent() {
     canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
-
-    const imageData = await loadImageData();
     const quote = await loadQuote();
-    const gradientColor = pickGradientColor(imageData.hexcodes);
+
+    const gradientColor = pickGradientColor(currentImageData.hexcodes);
+
     const imagePromise = new Promise((resolve) => {
         const image = new Image();
-        image.src = `${backendUrl}/image/${imageData.image}`;
+        image.src = `${backendUrl}/image/${currentImageData.image}`;
         image.onload = () => {
             resolve(image);
         };
@@ -43,9 +86,6 @@ async function drawContent() {
 
     drawGradient(gradientColor);
     drawQuote(gradientColor.hsl[2], quote);
-    console.log(imageData);
-    console.log(gradientColor);
-
 }
 
 function pickGradientColor(hexcodes){
@@ -111,14 +151,28 @@ function drawQuote(primaryColorLuma, quote) {
             lines[i].height = lines[i].height / factor;
         }
     }
+    let authorX, authorY, dateX, dateY;
+    switch (currentWindowMode) {
+        case 'portrait':
+            authorX = canvas.width / 2;
+            authorY = 7.5 * canvas.height / 8;
+            dateX = canvas.width / 2;
+            dateY = 7.5 * canvas.height / 7.7;
+            break;
+        case 'landscape':
+            authorX = canvas.width / 1.25;
+            authorY = 7.5 * canvas.height / 8;
+            dateX = canvas.width / 1.25;
+            dateY = 3 * canvas.height / 4;
+            break;
+    }
     renderMultilineString(lines, canvas.width / 2, 3 * canvas.height / 4, fontColor, fontSize);
     ctx.fillStyle = fontColor;
     ctx.font = `17pt ${fontFamily}`;
     ctx.textAlign = 'center';
-    ctx.fillText(quote.author, canvas.width / 2, 7.5 * canvas.height / 8);
+    ctx.fillText(quote.author, authorX, authorY);
     ctx.font = `16pt ${fontFamily}`;
-    ctx.fillText(`- ${new Date(quote.date).getFullYear()} -`, canvas.width / 2, 7.5 * canvas.height / 7.7);
-
+    ctx.fillText(`- ${new Date(quote.date).getFullYear()} -`, dateX, dateY);
 }
 
 /**
@@ -211,8 +265,12 @@ function findClosestSpace(text, position) {
  * returns {Object}
  */
 async function loadImageData() {
-    const url = new URL(`${backendUrl}/random?mode=portrait`);
-    return fetch(url.toString())
+    let url = new URL(`${backendUrl}/random?mode=portrait`);
+    portraitImageData = await fetch(url.toString())
+        .then(response => response.json());
+
+    url = new URL(`${backendUrl}/random?mode=landscape`);
+    landscapeImageData = await fetch(url.toString())
         .then(response => response.json());
 }
 
