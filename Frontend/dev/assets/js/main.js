@@ -45,13 +45,9 @@ function setCurrentImageData(){
 
 function setCanvasSize(){
     canvas = document.getElementById('myCanvas');
-    if(currentWindowMode === 'portrait') {
-        canvas.height = window.innerHeight / 1.1;
-        canvas.width = canvas.height / 2;
-    } else {
-        canvas.width = window.innerWidth / 1.1;
-        canvas.height = canvas.width / 2;
-    }
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    
 }
 
 async function resizeWindows() {
@@ -80,7 +76,7 @@ async function drawContent() {
         };
     });
     const image = await imagePromise;
-    let scale = image.height < canvas.height ? canvas.height / image.height : image.width < canvas.width ? canvas.width / image.width : 1;
+    const scale = Math.max(canvas.height / image.height, canvas.width / image.width);
 
     ctx.drawImage(image, 0, 0, image.width * scale, image.height * scale);
 
@@ -115,7 +111,7 @@ function pickGradientColor(hexcodes){
  */
 function drawGradient(primaryImageColor) {
     const ctx = canvas.getContext('2d');
-    const grd = ctx.createLinearGradient(0, canvas.height, 0, canvas.height / 2);
+    const grd = currentWindowMode === 'portrait' ? ctx.createLinearGradient(0, canvas.height, 0, canvas.height / 2) : ctx.createLinearGradient(canvas.width, 0, canvas.width / 2,0);
 
     grd.addColorStop(0, primaryImageColor.color);
     grd.addColorStop(1, `rgba(${primaryImageColor.rgb[0]},${primaryImageColor.rgb[1]},${primaryImageColor.rgb[2]},0)`);
@@ -130,7 +126,7 @@ function drawGradient(primaryImageColor) {
  */
 function drawQuote(primaryColorLuma, quote) {
     const ctx = canvas.getContext('2d');
-    let fontSize = 30;
+    let fontSize = 50;
     const formattedQuote = formatUsingLinebreaks(quote.text, fontSize);
     const fontColor = primaryColorLuma < 0.5 ? '#ffffff' : '#000000';
 
@@ -144,34 +140,43 @@ function drawQuote(primaryColorLuma, quote) {
         width.push(lines[i].width);
     }
     const excess = Math.max(...width) + 40;
-    if (excess > canvas.width) {
-        const factor = excess / canvas.width;
+    const newWidth = currentWindowMode === 'portrait' ? canvas.width : canvas.width / 3;
+    const factor = excess / newWidth;
+    if (excess > newWidth) {
         fontSize = fontSize / factor;
         for (let i = 0; i < lines.length; i++) {
             lines[i].height = lines[i].height / factor;
         }
     }
-    let authorX, authorY, dateX, dateY;
+    let count = 0;
+    for (let i = 0; i < lines.length; i++) {
+        count += lines[i].height + 5;
+    }
+    let authorX, authorY, dateX, dateY, quoteX, quoteY;
     switch (currentWindowMode) {
         case 'portrait':
+            quoteX = canvas.width / 2;
+            quoteY = canvas.height / 1.5;
             authorX = canvas.width / 2;
-            authorY = 7.5 * canvas.height / 8;
+            authorY = canvas.height / 1.1;
             dateX = canvas.width / 2;
-            dateY = 7.5 * canvas.height / 7.7;
+            dateY = canvas.height / 1.05;
             break;
         case 'landscape':
+            quoteX = canvas.width / 1.25;
+            quoteY = canvas.height / 2.5;
             authorX = canvas.width / 1.25;
-            authorY = 7.5 * canvas.height / 8;
+            authorY = canvas.height / 1.25;
             dateX = canvas.width / 1.25;
-            dateY = 3 * canvas.height / 4;
+            dateY = canvas.height / 1.15;
             break;
     }
-    renderMultilineString(lines, canvas.width / 2, 3 * canvas.height / 4, fontColor, fontSize);
+    renderMultilineString(lines, quoteX, quoteY, fontColor, fontSize);
     ctx.fillStyle = fontColor;
-    ctx.font = `17pt ${fontFamily}`;
+    ctx.font = `${fontSize - 5 < 16 ? 16 : fontSize - 6}pt ${fontFamily}`;
     ctx.textAlign = 'center';
     ctx.fillText(quote.author, authorX, authorY);
-    ctx.font = `16pt ${fontFamily}`;
+    ctx.font = `${fontSize - 6 < 15 ? 15 : fontSize - 6}pt ${fontFamily}`;
     ctx.fillText(`- ${new Date(quote.date).getFullYear()} -`, dateX, dateY);
 }
 
@@ -225,7 +230,8 @@ function formatUsingLinebreaks(quoteText, fontSize) {
 
     for (let lineBreak = maxLineBreaks; lineBreak > 0; lineBreak--) {
         // check if the current amount of linebreaks is justified
-        if (textWidth.width >= canvas.width * lineBreak) {
+        const newWidth = currentWindowMode === 'portrait' ? canvas.width : canvas.width / 3;
+        if (textWidth.width >= newWidth * lineBreak) {
             // get how many characters are supposed to be in a line
             const charCount = quoteText.length / (lineBreak + 1);
             let lastIndex = 0;
@@ -284,7 +290,6 @@ async function loadQuote() {
     if (response.status === 200 ) {
         const body = await response.json();
         if(body.contents.quotes[0].quote.length <= 150){
-            console.log(body.contents.quotes[0].quote.length);
             return {
                 text: body.contents.quotes[0].quote,
                 author: body.contents.quotes[0].author,
@@ -293,7 +298,7 @@ async function loadQuote() {
         }
     }
     return {
-        text: 'Wer anderen eine Grube gräbt, hat selbst ein Bratwurst Bratgerät',
+        text: 'Wer anderen eine Grube gräbt, hat selbst ein Bratwurst Bratgerät, Wer anderen eine Grube gräbt, hat selbst ein Bratwurst Bratgerät',
         author: 'Dominik Deimel',
         date: '2077-1-1'
     };
