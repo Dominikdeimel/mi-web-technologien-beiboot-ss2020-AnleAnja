@@ -298,7 +298,7 @@ async function loadQuote() {
         }
     }
     return {
-        text: 'Wer anderen eine Grube gräbt, hat selbst ein Bratwurst Bratgerät, Wer anderen eine Grube gräbt, hat selbst ein Bratwurst Bratgerät',
+        text: 'Wer anderen eine Grube gräbt, hat selbst ein Bratwurst Bratgerät',
         author: 'Dominik Deimel',
         date: '2077-1-1'
     };
