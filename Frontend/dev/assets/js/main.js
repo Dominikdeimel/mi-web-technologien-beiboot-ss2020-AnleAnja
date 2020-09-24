@@ -47,7 +47,6 @@ function setCanvasSize(){
     canvas = document.getElementById('myCanvas');
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
-    
 }
 
 async function resizeWindows() {
@@ -64,6 +63,7 @@ async function resizeWindows() {
 async function drawContent() {
     canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
+
     const quote = await loadQuote();
 
     const gradientColor = pickGradientColor(currentImageData.hexcodes);
@@ -114,7 +114,8 @@ function drawGradient(primaryImageColor) {
     const grd = currentWindowMode === 'portrait' ? ctx.createLinearGradient(0, canvas.height, 0, canvas.height / 2) : ctx.createLinearGradient(canvas.width, 0, canvas.width / 2,0);
 
     grd.addColorStop(0, primaryImageColor.color);
-    grd.addColorStop(1, `rgba(${primaryImageColor.rgb[0]},${primaryImageColor.rgb[1]},${primaryImageColor.rgb[2]},0)`);
+    grd.addColorStop(0.7, `rgba(${primaryImageColor.rgb[0]},${primaryImageColor.rgb[1]},${primaryImageColor.rgb[2]},0.4)`);
+    grd.addColorStop(1, `rgba(${primaryImageColor.rgb[0]},${primaryImageColor.rgb[1]},${primaryImageColor.rgb[2]},0.1)`);
     ctx.fillStyle = grd;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
@@ -139,7 +140,7 @@ function drawQuote(primaryColorLuma, quote) {
     for (let i = 0; i < lines.length; i++) {
         width.push(lines[i].width);
     }
-    const excess = Math.max(...width) + 40;
+    const excess = Math.max(...width) + 200;
     const newWidth = currentWindowMode === 'portrait' ? canvas.width : canvas.width / 3;
     const factor = excess / newWidth;
     if (excess > newWidth) {
@@ -148,6 +149,7 @@ function drawQuote(primaryColorLuma, quote) {
             lines[i].height = lines[i].height / factor;
         }
     }
+
     let count = 0;
     for (let i = 0; i < lines.length; i++) {
         count += lines[i].height + 5;
@@ -156,7 +158,7 @@ function drawQuote(primaryColorLuma, quote) {
     switch (currentWindowMode) {
         case 'portrait':
             quoteX = canvas.width / 2;
-            quoteY = canvas.height / 1.5;
+            quoteY = canvas.height / 1.4;
             authorX = canvas.width / 2;
             authorY = canvas.height / 1.1;
             dateX = canvas.width / 2;
@@ -291,16 +293,16 @@ async function loadQuote() {
         const body = await response.json();
         if(body.contents.quotes[0].quote.length <= 150){
             return {
-                text: body.contents.quotes[0].quote,
+                text: `«${body.contents.quotes[0].quote}»`,
                 author: body.contents.quotes[0].author,
                 date: body.contents.quotes[0].date
             };
         }
     }
     return {
-        text: 'Wer anderen eine Grube gräbt, hat selbst ein Bratwurst Bratgerät',
-        author: 'Dominik Deimel',
-        date: '2077-1-1'
+        text: '«We are not makers of history. We are made by history.»',
+        author: 'Martin Luther King Jr.',
+        date: '1960-1-1'
     };
 }
 
