@@ -6,7 +6,7 @@ window.addEventListener('resize', () => resizeWindows().catch(console.error));
 let canvas, currentWindowMode, landscapeImageData, portraitImageData, currentImageData;
 const backendUrl = 'https://beibootapi.herokuapp.com';
 const quoteApiUrl = 'https://quotes.rest/qod';
-const fontFamily = 'Barlow';
+const fontFamily = 'Barlow Regular';
 
 /**
  * @returns {Promise<void>}
@@ -14,16 +14,11 @@ const fontFamily = 'Barlow';
 function setup() {
     setWindowMode();
     setCanvasSize();
-    if (navigator.onLine) {
-        loadImageData()
-            .then(() => {
-                setCurrentImageData();
-                drawContent();
-            });
-       
-    } else {
-        renderOfflineImage();
-    }
+    loadImageData()
+        .then(() => {
+            setCurrentImageData();
+            drawContent();
+        });
 }
 
 function setWindowMode() {
