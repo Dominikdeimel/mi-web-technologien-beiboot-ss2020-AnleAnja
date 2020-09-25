@@ -2,9 +2,11 @@ const CACHE_NAME = 'DQIG_CACHE';
 const toCache = [
     '/',
     '/js/main.min.js',
+    '/css/styles.min.css',
     '/js/pwa.webmanifest',
     '/images/apple-touch.png',
-    'images/splash-screen.png'
+    '/images/offlineImage.png',
+    '/images/splash-screen.png'
 ];
 
 self.addEventListener('install', function(event) {

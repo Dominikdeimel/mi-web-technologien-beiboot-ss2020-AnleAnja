@@ -4,15 +4,14 @@ document.addEventListener('DOMContentLoaded', setup, false);
 window.addEventListener('resize', () => resizeWindows().catch(console.error));
 
 let canvas, currentWindowMode, landscapeImageData, portraitImageData, currentImageData;
-const backendUrl = 'http://192.168.178.50:3000';
-const quoteApiUrl = 'http://quotes.rest/qod';
+const backendUrl = 'https://beibootapi.herokuapp.com';
+const quoteApiUrl = 'https://quotes.rest/qod';
 const fontFamily = 'Barlow';
 
 /**
  * @returns {Promise<void>}
  */
 function setup() {
-    initializeServiceWorker();
     setWindowMode();
     setCanvasSize();
     if (navigator.onLine) {
@@ -158,7 +157,7 @@ function drawQuote(primaryColorLuma, quote) {
     switch (currentWindowMode) {
         case 'portrait':
             quoteX = canvas.width / 2;
-            quoteY = canvas.height / 1.4;
+            quoteY = canvas.height / 1.5;
             authorX = canvas.width / 2;
             authorY = canvas.height / 1.1;
             dateX = canvas.width / 2;
@@ -319,21 +318,6 @@ function renderOfflineImage() {
         ctx.drawImage(image, 0, 0);
     };
 }
-
-/**
- * @returns {void}
- */
-function initializeServiceWorker() {
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js')
-            .then((reg) => {
-                console.log('Service worker registered -->', reg);
-            }, (err) => {
-                console.error('Service worker not registered -->', err);
-            });
-    }
-}
-
 /**
  * @typedef {Object} StringWithDimensions
  * @property {String} content
