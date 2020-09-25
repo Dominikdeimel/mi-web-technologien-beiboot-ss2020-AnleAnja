@@ -152,28 +152,31 @@ function drawQuote(primaryColorLuma, quote) {
     switch (currentWindowMode) {
         case 'portrait':
             quoteX = canvas.width / 2;
-            quoteY = canvas.height / 1.5;
+            quoteY = canvas.height / 1.4;
             authorX = canvas.width / 2;
             authorY = canvas.height / 1.1;
             dateX = canvas.width / 2;
-            dateY = canvas.height / 1.05;
+            dateY = canvas.height / 9;
             break;
         case 'landscape':
             quoteX = canvas.width / 1.25;
-            quoteY = canvas.height / 2.5;
+            quoteY = canvas.height / 1.8;
             authorX = canvas.width / 1.25;
             authorY = canvas.height / 1.25;
             dateX = canvas.width / 1.25;
-            dateY = canvas.height / 1.15;
+            dateY = canvas.height / 8;
             break;
     }
     renderMultilineString(lines, quoteX, quoteY, fontColor, fontSize);
     ctx.fillStyle = fontColor;
-    ctx.font = `${fontSize - 5 < 16 ? 16 : fontSize - 6}pt ${fontFamily}`;
+    ctx.font = `${fontSize - 5 < 18 ? 18 : fontSize - 6}pt ${fontFamily}`;
     ctx.textAlign = 'center';
     ctx.fillText(quote.author, authorX, authorY);
-    ctx.font = `${fontSize - 6 < 15 ? 15 : fontSize - 6}pt ${fontFamily}`;
-    ctx.fillText(`- ${new Date(quote.date).getFullYear()} -`, dateX, dateY);
+
+    ctx.font = `${fontSize - 6 < 18 ? 18 : fontSize - 6}pt ${fontFamily}`;
+    const date = new Date(quote.date);
+    const month = date.toLocaleString('de-DE', { month: 'long' });
+    ctx.fillText(`-- ${date.getDay()}. ${month} ${date.getFullYear()} --`, dateX, dateY);
 }
 
 /**
@@ -296,21 +299,7 @@ async function loadQuote() {
     return {
         text: '«We are not makers of history. We are made by history.»',
         author: 'Martin Luther King Jr.',
-        date: '1960-1-1'
-    };
-}
-
-/**
- * @returns {void}
- */
-function renderOfflineImage() {
-    canvas = document.getElementById('myCanvas');
-    const image = new Image;
-    const ctx = canvas.getContext('2d');
-
-    image.src = '/images/offlineImage.png';
-    image.onload = function () {
-        ctx.drawImage(image, 0, 0);
+        date: Date.now()
     };
 }
 /**
