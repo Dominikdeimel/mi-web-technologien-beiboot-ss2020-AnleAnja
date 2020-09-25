@@ -8,6 +8,8 @@ Google Lighthouse is an open-source tool that can measure the quality of website
 Accessibility, performance or search engine optimization.
 Lighthouse can also create a report for a progressive web app by additionally checking the speed, reliability, and the installability of the application is also checked.
 
+**Link:** [Google Lighthouse](https://developers.google.com/web/tools/lighthouse)
+
 ### Features of the Google Lighthouse Report
 
 In the beginning, the Google Lighthouse report was used as a guide for the implementation. 
