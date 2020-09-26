@@ -16,7 +16,7 @@ In the beginning, the Google Lighthouse report was used as a guide for the imple
 Besides the minimal requirements such as installability, the _PWA Optimized_ aspect was the main focus. 
 In summary, all points of the report were worked through and fulfilled in order to provide the best possible application.
 
-<img src="https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.github/images/pwa.png" width="600">
+<img src="https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.github/images/pwa.png" width="1000">
 
 ## Must-haves and Nice-to-haves of Issue 7
 
