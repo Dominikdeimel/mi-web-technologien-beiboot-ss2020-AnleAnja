@@ -7,6 +7,7 @@ let canvas, currentWindowMode, landscapeImageData, portraitImageData, currentIma
 const backendUrl = 'https://beibootapi.herokuapp.com';
 const quoteApiUrl = 'https://quotes.rest/qod';
 const fontFamily = 'Barlow Regular';
+let quoteFontSize, dateAuthorFontSize;
 
 /**
  * @returns {Promise<void>}
@@ -121,14 +122,14 @@ function drawGradient(primaryImageColor) {
  */
 function drawQuote(primaryColorLuma, quote) {
     const ctx = canvas.getContext('2d');
-    let fontSize = 50;
-    const formattedQuote = formatUsingLinebreaks(quote.text, fontSize);
+    setFontSize(quote);
+    const formattedQuote = formatUsingLinebreaks(quote.text, quoteFontSize);
     const fontColor = primaryColorLuma < 0.5 ? '#ffffff' : '#000000';
 
     let lines = [];
     let width = [];
     for (let i = 0; i < formattedQuote.length; i++) {
-        const dimensions = calculateTextDimensions(formattedQuote[i], fontSize);
+        const dimensions = calculateTextDimensions(formattedQuote[i], quoteFontSize);
         lines.push(dimensions);
     }
     for (let i = 0; i < lines.length; i++) {
@@ -138,7 +139,7 @@ function drawQuote(primaryColorLuma, quote) {
     const newWidth = currentWindowMode === 'portrait' ? canvas.width : canvas.width / 3;
     const factor = excess / newWidth;
     if (excess > newWidth) {
-        fontSize = fontSize / factor;
+        // quoteFontSize = quoteFontSize / factor;
         for (let i = 0; i < lines.length; i++) {
             lines[i].height = lines[i].height / factor;
         }
@@ -167,16 +168,68 @@ function drawQuote(primaryColorLuma, quote) {
             dateY = canvas.height / 8;
             break;
     }
-    renderMultilineString(lines, quoteX, quoteY, fontColor, fontSize);
+    renderMultilineString(lines, quoteX, quoteY, fontColor, quoteFontSize);
     ctx.fillStyle = fontColor;
-    ctx.font = `${fontSize - 5 < 18 ? 18 : fontSize - 6}pt ${fontFamily}`;
+    ctx.font = `${dateAuthorFontSize}pt ${fontFamily}`;
     ctx.textAlign = 'center';
     ctx.fillText(quote.author, authorX, authorY);
+    console.log(quoteFontSize);
+    ctx.font = `${dateAuthorFontSize}pt ${fontFamily}`;
+    const parseDate = new Date().toLocaleString('de-DE', {year: 'numeric', month: 'long', day: 'numeric'});
+    ctx.fillText(`-- ${parseDate} --`, dateX, dateY);
+}
 
-    ctx.font = `${fontSize - 6 < 18 ? 18 : fontSize - 6}pt ${fontFamily}`;
-    const date = new Date(quote.date);
-    const month = date.toLocaleString('de-DE', { month: 'long' });
-    ctx.fillText(`-- ${date.getDay()}. ${month} ${date.getFullYear()} --`, dateX, dateY);
+function setFontSize(quote) {
+    const quoteLength = quote.text.length;
+    switch (currentWindowMode) {
+        case 'portrait': {
+            if(quoteLength >= 40 && quoteLength < 60) {
+                quoteFontSize = 30;
+                dateAuthorFontSize = 22;
+            } else if(quoteLength >= 60 && quoteLength < 80) {
+                quoteFontSize = 28;
+                dateAuthorFontSize = 20;
+            } else if(quoteLength >= 80 && quoteLength < 100) {
+                quoteFontSize = 25;
+                dateAuthorFontSize = 18;
+            } else if (quoteLength >= 100 && quoteLength < 120) {
+                quoteFontSize = 22;
+                dateAuthorFontSize = 16;
+            } else if (quoteLength >= 120 && quoteLength < 140) {
+                quoteFontSize = 20;
+                dateAuthorFontSize = 14;
+            } else if (quoteLength >= 140 && quoteLength < 160) {
+                quoteFontSize = 16;
+                dateAuthorFontSize = 11;
+            }
+            break;
+        }
+        case 'landscape': {
+            if(quoteLength >= 40 && quoteLength < 60) {
+                quoteFontSize = 40;
+                dateAuthorFontSize = 28;
+            } else if(quoteLength >= 60 && quoteLength < 80) {
+                quoteFontSize = 35;
+                dateAuthorFontSize = 25;
+            } else if(quoteLength >= 80 && quoteLength < 100) {
+                quoteFontSize = 30;
+                dateAuthorFontSize = 22;
+            } else if (quoteLength >= 100 && quoteLength < 120) {
+                quoteFontSize = 28;
+                dateAuthorFontSize = 20;
+            } else if (quoteLength >= 120 && quoteLength < 140) {
+                quoteFontSize = 25;
+                dateAuthorFontSize = 18;
+            } else if (quoteLength >= 140 && quoteLength < 160) {
+                quoteFontSize = 22;
+                dateAuthorFontSize = 16;
+            }
+            break;
+        }
+    }
+   
+    console.log(quoteFontSize);
+    console.log(dateAuthorFontSize);
 }
 
 /**
@@ -222,14 +275,15 @@ function calculateTextDimensions(text, fontSize) {
  */
 function formatUsingLinebreaks(quoteText, fontSize) {
     const ctx = canvas.getContext('2d');
-    const maxLineBreaks = 2;
     const lines = [];
     ctx.font = `${fontSize}pt ${fontFamily}`;
     const textWidth = ctx.measureText(quoteText);
+    const newWidth = currentWindowMode === 'portrait' ? canvas.width : canvas.width / 3;
+    const maxLineBreaks = Math.ceil(textWidth.width / (newWidth - 50));
+    console.log(maxLineBreaks);
 
     for (let lineBreak = maxLineBreaks; lineBreak > 0; lineBreak--) {
         // check if the current amount of linebreaks is justified
-        const newWidth = currentWindowMode === 'portrait' ? canvas.width : canvas.width / 3;
         if (textWidth.width >= newWidth * lineBreak) {
             // get how many characters are supposed to be in a line
             const charCount = quoteText.length / (lineBreak + 1);
@@ -291,15 +345,13 @@ async function loadQuote() {
         if(body.contents.quotes[0].quote.length <= 150){
             return {
                 text: `«${body.contents.quotes[0].quote}»`,
-                author: body.contents.quotes[0].author,
-                date: body.contents.quotes[0].date
+                author: body.contents.quotes[0].author || 'Unbekannt'
             };
         }
     }
     return {
         text: '«We are not makers of history. We are made by history.»',
-        author: 'Martin Luther King Jr.',
-        date: Date.now()
+        author: 'Martin Luther King Jr.'
     };
 }
 /**
