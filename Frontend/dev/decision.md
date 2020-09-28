@@ -49,4 +49,4 @@ While all must-haves are implemented, some nice-to-haves could not be implemente
 ## Additional Features
 
 In order to give the user the best possible experience, the offline functionality of the application was also optimized. 
-For offline use, an image as well as quote is locally cached.
+For offline use, an image as well as a quote is locally cached.
