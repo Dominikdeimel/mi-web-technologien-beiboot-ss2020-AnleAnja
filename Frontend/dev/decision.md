@@ -39,10 +39,10 @@ While all must-haves are implemented, some nice-to-haves could not be implemente
 |-----------------------------------------------------------------|------------|------------------------------------------------------------------|
 | Selektive Abdeckerfarbe                                         | Done       | More appealing visuals                                           |
 | Rejecting von zu langen Zitaten                                 | Done       | Long quotes can overload the image                               |
-| lokaler Schwerpunkt der Hauptfarben(n)                          | Not Done   | Time constrains                                                  |
+| lokaler Schwerpunkt der Hauptfarben(n)                          | Not Done   | Time constraints                                                  |
 | Ansicht für Smartphone Landscape                                | Done       | Making the application more versatile                            |
 | Ansicht für größere Viewports                                   | Done       | Making the application more versatile                            |
-| Fokuspunkt                                                      | Not Done   | Time constrains                                                  |
+| Fokuspunkt                                                      | Not Done   | Time constraints                                                  |
 | selektive Bildauswahl entsprechend der Orientierung des Devices | Done       | Portrait images dont work well in landscape mode and vice versa  |
  
  
