@@ -5,7 +5,7 @@
 ### Google Lighthouse
 The website report from Google Lighthouse was used as a guide for creating the PWA. 
 Google Lighthouse is an open-source tool that can measure the quality of websites by checking
-Accessibility, performance or search engine optimization.
+accessibility, performance or search engine optimization.
 Lighthouse can also create a report for a progressive web app by additionally checking the speed, reliability, and the installability of the application is also checked.
 
 **Link:** [Google Lighthouse](https://developers.google.com/web/tools/lighthouse)
@@ -21,7 +21,7 @@ In summary, all points of the report were worked through and fulfilled in order 
 ## Must-haves and Nice-to-haves of Issue 7
 
 While working on the PWA, a dedicated list of must-haves and nice-to-haves was published. 
-While all must-haves are implemented, some nice-to-haves could not be implemented because of time constrains.
+While all must-haves are implemented, some nice-to-haves could not be implemented because of time constraints.
 
 ### Must-haves
 
